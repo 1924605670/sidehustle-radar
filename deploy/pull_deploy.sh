@@ -7,6 +7,7 @@ REPO_DIR="${REPO_DIR:-$APP_ROOT/repo}"
 REPO_URL="${REPO_URL:-https://github.com/1924605670/sidehustle-radar.git}"
 BRANCH="${BRANCH:-main}"
 DB_PATH="${DB_PATH:-/var/lib/sidehustle-radar/sidehustle-radar.sqlite3}"
+GIT_PROXY="${GIT_PROXY:-http://127.0.0.1:7890}"
 LOCK_FILE="/tmp/sidehustle-radar-deploy.lock"
 
 exec 9>"$LOCK_FILE"
@@ -20,20 +21,27 @@ as_app_user() {
   sudo -H -u "$APP_USER" "$@"
 }
 
+git_as_app_user() {
+  sudo -H -u "$APP_USER" env \
+    HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" \
+    https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" \
+    "$@"
+}
+
 install -d -o "$APP_USER" -g "$APP_USER" "$APP_ROOT" "$(dirname "$DB_PATH")"
 
 if [ ! -d "$REPO_DIR/.git" ]; then
   log "cloning $REPO_URL"
-  as_app_user git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR"
+  git_as_app_user git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR"
 fi
 
-as_app_user git -C "$REPO_DIR" remote set-url origin "$REPO_URL" || true
+git_as_app_user git -C "$REPO_DIR" remote set-url origin "$REPO_URL" || true
 old_sha="$(as_app_user git -C "$REPO_DIR" rev-parse HEAD 2>/dev/null || true)"
-if ! as_app_user git -C "$REPO_DIR" ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+if ! git_as_app_user git -C "$REPO_DIR" ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
   log "remote branch $BRANCH is not available yet; skipping"
   exit 0
 fi
-as_app_user git -C "$REPO_DIR" fetch origin "$BRANCH"
+git_as_app_user git -C "$REPO_DIR" fetch origin "$BRANCH"
 new_sha="$(as_app_user git -C "$REPO_DIR" rev-parse "origin/$BRANCH")"
 
 if [ "$old_sha" = "$new_sha" ] && systemctl is-active --quiet sidehustle-radar-api.service; then
@@ -43,7 +51,7 @@ fi
 
 log "updating from ${old_sha:-none} to $new_sha"
 if [ "$old_sha" != "$new_sha" ]; then
-  as_app_user git -C "$REPO_DIR" merge --ff-only "origin/$BRANCH"
+  git_as_app_user git -C "$REPO_DIR" merge --ff-only "origin/$BRANCH"
 fi
 
 log "validating data and tests"

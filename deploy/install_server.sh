@@ -10,6 +10,7 @@ DB_PATH="${DB_PATH:-/var/lib/sidehustle-radar/sidehustle-radar.sqlite3}"
 NGINX_CONF="${NGINX_CONF:-/etc/nginx/sites-enabled/api2.hometodo.top.conf}"
 API_PREFIX="${API_PREFIX:-/sidehustle-radar-api}"
 API_PORT="${API_PORT:-18110}"
+GIT_PROXY="${GIT_PROXY:-http://127.0.0.1:7890}"
 
 if [ "$(id -u)" -ne 0 ]; then
   echo "Please run as root, e.g. sudo bash deploy/install_server.sh" >&2
@@ -19,12 +20,12 @@ fi
 install -d -o "$APP_USER" -g "$APP_USER" "$APP_ROOT" "$(dirname "$DB_PATH")" /var/log/sidehustle-radar
 
 if [ ! -d "$REPO_DIR/.git" ]; then
-  sudo -H -u "$APP_USER" git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR"
+  sudo -H -u "$APP_USER" env HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR"
 fi
 
-sudo -H -u "$APP_USER" git -C "$REPO_DIR" remote set-url origin "$REPO_URL" || true
-if sudo -H -u "$APP_USER" git -C "$REPO_DIR" ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1 && sudo -H -u "$APP_USER" git -C "$REPO_DIR" fetch origin "$BRANCH"; then
-  sudo -H -u "$APP_USER" git -C "$REPO_DIR" merge --ff-only "origin/$BRANCH" || true
+sudo -H -u "$APP_USER" env HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" git -C "$REPO_DIR" remote set-url origin "$REPO_URL" || true
+if sudo -H -u "$APP_USER" env HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" git -C "$REPO_DIR" ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1 && sudo -H -u "$APP_USER" env HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" git -C "$REPO_DIR" fetch origin "$BRANCH"; then
+  sudo -H -u "$APP_USER" env HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" git -C "$REPO_DIR" merge --ff-only "origin/$BRANCH" || true
 else
   echo "Remote branch $BRANCH is not available yet; installing current local checkout."
 fi
