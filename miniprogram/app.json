@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/projects/projects",
+    "pages/project-detail/project-detail",
     "pages/scan/scan",
     "pages/result/result",
     "pages/fit/fit",
@@ -39,4 +40,3 @@
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }
-

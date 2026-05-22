@@ -1,1 +1,39 @@
+.result-score {
+  color: #ffffff;
+  font-size: 86rpx;
+  font-weight: 800;
+  line-height: 1;
+}
 
+.result-meta {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 18rpx;
+}
+
+.result-meta .muted {
+  flex: 1;
+}
+
+.rule-card {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #edf1f7;
+}
+
+.rule-card:last-child {
+  border-bottom: 0;
+}
+
+.rule-keyword {
+  color: #b42318;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.source-copy {
+  margin-top: 18rpx;
+  color: #0f766e;
+  font-size: 24rpx;
+  font-weight: 700;
+}

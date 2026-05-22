@@ -3,7 +3,16 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, unquote, urlparse
 
-from db import connect, init_schema, load_project, load_projects, load_risk_rules
+from db import (
+    connect,
+    init_schema,
+    load_cases,
+    load_cases_for_categories,
+    load_cases_for_project,
+    load_project,
+    load_projects,
+    load_risk_rules,
+)
 from risk import hash_text, normalize_text, scan_risk
 
 
@@ -33,6 +42,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.handle_projects(query)
         if path.startswith("/projects/"):
             return self.handle_project_detail(path)
+        if path == "/cases":
+            return self.handle_cases(query)
         if path == "/hot-keywords":
             return self.respond(
                 {
@@ -79,6 +90,7 @@ class Handler(BaseHTTPRequestHandler):
         with connect() as conn:
             init_schema(conn)
             projects = load_projects(conn)
+            cases = load_cases(conn, 200)
 
         filtered = []
         for project in projects:
@@ -103,7 +115,10 @@ class Handler(BaseHTTPRequestHandler):
             filtered.append(project)
 
         start = (page - 1) * page_size
-        items = [to_project_list_item(project) for project in filtered[start : start + page_size]]
+        items = [
+            to_project_list_item(project, cases)
+            for project in filtered[start : start + page_size]
+        ]
         self.respond({"items": items, "total": len(filtered), "page": page, "page_size": page_size})
 
     def handle_project_detail(self, path):
@@ -111,9 +126,38 @@ class Handler(BaseHTTPRequestHandler):
         with connect() as conn:
             init_schema(conn)
             project = load_project(conn, slug)
+            cases = load_cases_for_project(conn, project["id"], 8) if project else []
         if not project:
             return self.respond({"error": "project_not_found"}, 404)
+        project["cases"] = [to_case_list_item(case) for case in cases]
         return self.respond(project)
+
+    def handle_cases(self, query):
+        limit = min(max(int((query.get("limit") or ["20"])[0]), 1), 50)
+        project_id = (query.get("project_id") or [None])[0]
+        category = (query.get("category") or [None])[0]
+
+        with connect() as conn:
+            init_schema(conn)
+            all_cases = load_cases(conn, 200)
+
+        if project_id:
+            filtered = [
+                case
+                for case in all_cases
+                if project_id in set(case.get("related_project_ids", []))
+            ]
+        elif category:
+            filtered = [
+                case
+                for case in all_cases
+                if category in set(case.get("related_categories", []))
+            ]
+        else:
+            filtered = all_cases
+
+        cases = filtered[:limit]
+        self.respond({"items": [to_case_list_item(case) for case in cases], "total": len(filtered)})
 
     def handle_risk_scan(self, body):
         text = str(body.get("text") or "").strip()
@@ -128,12 +172,17 @@ class Handler(BaseHTTPRequestHandler):
         with connect() as conn:
             init_schema(conn)
             rules = load_risk_rules(conn)
-        result = scan_risk(text, rules)
+            result = scan_risk(text, rules)
+            categories = {hit["category"] for hit in result.get("hit_rules", [])}
+            related_cases = load_cases_for_categories(conn, categories, limit=5)
         result.update(
             {
                 "source_platform": body.get("source_platform") or "unknown",
                 "input_hash": hash_text(text),
                 "saved_original_text": False,
+                "risk_categories": sorted(categories),
+                "related_cases": [to_case_list_item(case) for case in related_cases],
+                "evidence_note": "案例来自公开机关、法院或媒体材料，仅用于帮助识别相似风险信号。",
             }
         )
         return self.respond(result)
@@ -141,20 +190,42 @@ class Handler(BaseHTTPRequestHandler):
     def handle_fit_test(self, body):
         answers = body.get("answers") or {}
         recommended = []
-        if answers.get("can_edit_video") or answers.get("work_type") == "content":
-            recommended.extend(["p_video_editing_service", "p_xiaohongshu_cover_design"])
+        work_type = answers.get("work_type")
+        if answers.get("can_edit_video") or work_type == "content":
+            recommended.extend(["p_video_editing_service", "p_xiaohongshu_cover_design", "p_local_business_video"])
         if answers.get("can_write"):
             recommended.extend(["p_ai_writing_submission", "p_resume_optimization"])
+        if work_type == "service":
+            recommended.extend(["p_resume_optimization", "p_public_account_layout", "p_data_organizing"])
+        if work_type == "data":
+            recommended.extend(["p_data_organizing", "p_public_account_layout", "p_ppt_template_sales"])
         if answers.get("willing_to_sell"):
             recommended.append("p_local_business_video")
+        if answers.get("risk_preference") == "no_money_first":
+            recommended.extend(["p_data_organizing", "p_video_editing_service"])
         if not recommended:
             recommended.extend(["p_data_organizing", "p_public_account_layout", "p_ppt_template_sales"])
 
         deduped = list(dict.fromkeys(recommended))[:3]
+        with connect() as conn:
+            init_schema(conn)
+            projects = {project["id"]: project for project in load_projects(conn)}
+            cases = load_cases(conn, 200)
+
         return self.respond(
             {
                 "recommended_project_ids": deduped,
                 "avoid_project_ids": ["p_brushing_rebate", "p_running_points", "p_gambling_arbitrage"],
+                "recommended_projects": [
+                    to_project_list_item(projects[project_id], cases)
+                    for project_id in deduped
+                    if project_id in projects
+                ],
+                "avoid_projects": [
+                    to_project_list_item(projects[project_id], cases)
+                    for project_id in ["p_brushing_rebate", "p_running_points", "p_gambling_arbitrage"]
+                    if project_id in projects
+                ],
                 "seven_day_plan": [
                     "第 1 天：选 3 个同类案例，拆解交付物和价格。",
                     "第 2-3 天：做 2 个可展示的小样例。",
@@ -197,7 +268,14 @@ class Handler(BaseHTTPRequestHandler):
             super().log_message(fmt, *args)
 
 
-def to_project_list_item(project):
+def to_project_list_item(project, cases=None):
+    project_cases = []
+    if cases is not None:
+        project_cases = [
+            case
+            for case in cases
+            if project["id"] in set(case.get("related_project_ids", []))
+        ]
     return {
         "id": project["id"],
         "slug": project["slug"],
@@ -208,7 +286,25 @@ def to_project_list_item(project):
         "risk_score": project["risk_score"],
         "summary": project["summary"],
         "red_flags": project.get("red_flags", []),
+        "case_count": len(project_cases),
+        "top_case": to_case_list_item(project_cases[0]) if project_cases else None,
         "updated_at": project.get("updated_at"),
+    }
+
+
+def to_case_list_item(case):
+    return {
+        "id": case["id"],
+        "title": case["title"],
+        "source_name": case["source_name"],
+        "source_url": case["source_url"],
+        "event_date": case.get("event_date", ""),
+        "summary": case.get("summary", ""),
+        "loss_or_consequence": case.get("loss_or_consequence", ""),
+        "risk_points": case.get("risk_points", []),
+        "takeaway": case.get("takeaway", ""),
+        "related_project_ids": case.get("related_project_ids", []),
+        "related_categories": case.get("related_categories", []),
     }
 
 
@@ -222,4 +318,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

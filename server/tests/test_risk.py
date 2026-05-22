@@ -3,7 +3,15 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from server.db import connect, load_projects, load_risk_rules, seed_from_json
+from server.db import (
+    connect,
+    load_cases,
+    load_cases_for_categories,
+    load_cases_for_project,
+    load_projects,
+    load_risk_rules,
+    seed_from_json,
+)
 from server.risk import match_combo, scan_risk
 
 
@@ -18,15 +26,30 @@ class RiskTests(unittest.TestCase):
     def test_seed_and_scan(self):
         with tempfile.NamedTemporaryFile(suffix=".sqlite3") as tmp:
             with connect(Path(tmp.name)) as conn:
-                project_count, rule_count = seed_from_json(conn, ROOT_DIR / "data")
+                project_count, rule_count, case_count = seed_from_json(conn, ROOT_DIR / "data")
                 self.assertGreater(project_count, 0)
                 self.assertGreater(rule_count, 0)
+                self.assertGreater(case_count, 0)
                 self.assertGreater(len(load_projects(conn)), 0)
+                self.assertGreater(len(load_cases(conn)), 0)
+                self.assertGreater(
+                    len(load_cases_for_project(conn, "p_brushing_rebate")),
+                    0,
+                )
                 rules = load_risk_rules(conn)
 
         result = scan_risk("招聘点赞员，日结300-500，无需经验，导师带单，下载APP做任务返佣。", rules)
         self.assertEqual(result["risk_level"], "extreme")
         self.assertGreaterEqual(result["risk_score"], 80)
+
+    def test_cases_match_scan_categories(self):
+        with tempfile.NamedTemporaryFile(suffix=".sqlite3") as tmp:
+            with connect(Path(tmp.name)) as conn:
+                seed_from_json(conn, ROOT_DIR / "data")
+                cases = load_cases_for_categories(conn, {"brushing_rebate", "payment_first"})
+
+        self.assertGreater(len(cases), 0)
+        self.assertIn("risk_points", cases[0])
 
     def test_normal_editing_service_copy_is_not_extreme(self):
         rules = json.loads((ROOT_DIR / "data" / "risk-keywords.seed.json").read_text(encoding="utf-8"))
@@ -36,4 +59,3 @@ class RiskTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

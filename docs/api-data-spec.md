@@ -67,7 +67,26 @@
 | explanation | string | 命中解释 |
 | enabled | boolean | 是否启用 |
 
-### 2.3 scan_records
+### 2.3 cases
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| id | string | 案例 ID |
+| title | string | 案例标题 |
+| source_name | string | 公开来源名称 |
+| source_url | string | 公开来源链接 |
+| event_date | string | 事件或报道时间 |
+| summary | string | 案例摘要 |
+| loss_or_consequence | string | 损失、判罚或处置结果 |
+| related_project_ids | string[] | 关联项目 ID |
+| related_categories | string[] | 关联风险类别 |
+| risk_points | string[] | 案例里的危险信号 |
+| takeaway | string | 给用户的判断结论 |
+| priority | number | 展示优先级 |
+| status | string | draft/reviewing/published/archived |
+| updated_at | string | 更新时间 |
+
+### 2.4 scan_records
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -83,7 +102,7 @@
 | save_status | string | anonymous/saved/deleted |
 | created_at | string | 创建时间 |
 
-### 2.4 search_logs
+### 2.5 search_logs
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -93,7 +112,7 @@
 | result_count | number | 搜索结果数 |
 | created_at | string | 搜索时间 |
 
-### 2.5 feedback
+### 2.6 feedback
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -132,7 +151,12 @@
       "title": "刷单返利",
       "risk_level": "extreme",
       "risk_score": 98,
-      "summary": "高危，常见于先返小额再诱导垫资。"
+      "summary": "高危，常见于先返小额再诱导垫资。",
+      "case_count": 3,
+      "top_case": {
+        "title": "点击链接下载刷单 App 后被诱导做“推广热度”任务",
+        "source_name": "深圳大鹏新区公安分局"
+      }
     }
   ],
   "total": 1
@@ -143,9 +167,42 @@
 
 用途：项目详情。
 
-响应：返回完整 `projects` 字段。
+响应：返回完整 `projects` 字段，并附带 `cases` 真实案例列表。
 
-### 3.3 POST /risk-scan
+### 3.3 GET /cases
+
+用途：案例列表，可用于首页、项目详情和内容维护检查。
+
+请求参数：
+
+| 参数 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| limit | number | 否 | 返回数量，默认 20 |
+| project_id | string | 否 | 按项目 ID 过滤 |
+| category | string | 否 | 按风险类别过滤 |
+
+响应：
+
+```json
+{
+  "items": [
+    {
+      "id": "c_brushing_rebate_dapeng_2023",
+      "title": "点击链接下载刷单 App 后被诱导做“推广热度”任务",
+      "source_name": "深圳大鹏新区公安分局",
+      "source_url": "https://www.dpxq.gov.cn/dpgaj/gkmlpt/content/10/10706/post_10706121.html",
+      "event_date": "2023-06",
+      "summary": "当事人按要求安装涉诈刷单 App...",
+      "loss_or_consequence": "警方及时介入拦截，避免继续转账。",
+      "risk_points": ["陌生链接下载 App", "先给小额返利"],
+      "takeaway": "转入陌生 App 或要求充值时应立即停止。"
+    }
+  ],
+  "total": 17
+}
+```
+
+### 3.4 POST /risk-scan
 
 用途：文案风险检测。
 
@@ -182,11 +239,18 @@
     "是否需要先付款、充值或垫资？",
     "是否有清晰公司主体和合同？",
     "结算是否通过正规劳动或服务协议？"
+  ],
+  "related_cases": [
+    {
+      "title": "短视频点赞返利后升级为大额刷单",
+      "source_name": "新华网",
+      "risk_points": ["点赞截图返利", "加群派单", "大额任务"]
+    }
   ]
 }
 ```
 
-### 3.4 POST /fit-test
+### 3.5 POST /fit-test
 
 用途：副业适配测试。
 
@@ -213,6 +277,8 @@
 {
   "recommended_project_ids": ["p_video_editing", "p_xiaohongshu_cover", "p_public_account_layout"],
   "avoid_project_ids": ["p_brushing_rebate", "p_cashout_running_points"],
+  "recommended_projects": [],
+  "avoid_projects": [],
   "seven_day_plan": [
     "第 1 天：选 3 个同行样例拆解。",
     "第 2-3 天：做 2 个免费样例。",
@@ -222,7 +288,7 @@
 }
 ```
 
-### 3.5 POST /feedback
+### 3.6 POST /feedback
 
 用途：用户反馈。
 
@@ -273,4 +339,3 @@ function scanRisk(text, rules) {
   }
 }
 ```
-

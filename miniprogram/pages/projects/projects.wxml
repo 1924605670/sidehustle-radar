@@ -1,6 +1,15 @@
 <view class="page">
   <view class="panel">
+    <view class="section-title">项目风险库</view>
     <input class="input" placeholder="输入副业或兼职名称" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="search" />
+    <view class="button-row">
+      <view class="primary-button" bindtap="search">搜索</view>
+    </view>
+    <view class="filter-row">
+      <block wx:for="{{levelFilters}}" wx:key="value">
+        <view class="filter-chip {{activeLevel === item.value ? 'active' : ''}}" data-level="{{item.value}}" bindtap="selectLevel">{{item.text}}</view>
+      </block>
+    </view>
   </view>
 
   <block wx:if="{{loading}}">
@@ -8,19 +17,33 @@
   </block>
 
   <block wx:elif="{{items.length === 0}}">
-    <view class="panel">暂未收录这个项目。可以换个关键词试试。</view>
+    <view class="panel">
+      <view class="empty-state">暂未收录这个项目。可以换个关键词，或把看到的完整文案拿去“测风险”。</view>
+    </view>
   </block>
 
   <block wx:else>
-    <view class="panel" wx:for="{{items}}" wx:key="id">
-      <view style="display:flex;justify-content:space-between;gap:20rpx;">
-        <view style="font-size:32rpx;font-weight:700;">{{item.title}}</view>
-        <view class="risk-{{item.risk_level}}" style="font-weight:700;">{{item.risk_level_text}}</view>
+    <view class="section-title">
+      <text>查询结果</text>
+      <text class="muted">{{total}} 项</text>
+    </view>
+    <view class="project-card" wx:for="{{items}}" wx:key="id" data-slug="{{item.slug}}" bindtap="openProject">
+      <view class="card-head">
+        <view class="card-title">{{item.title}}</view>
+        <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
       </view>
       <view class="subtitle">{{item.summary}}</view>
+      <view class="meta-row">
+        <text>风险分 {{item.risk_score}}</text>
+        <text>{{item.case_count}} 个案例</text>
+      </view>
+      <view wx:if="{{item.top_case}}" class="case-mini">
+        <view class="muted">关联案例</view>
+        <view class="case-mini-title">{{item.top_case.title}}</view>
+      </view>
       <view>
-        <block wx:for="{{item.red_flags}}" wx:key="*this">
-          <view class="tag">{{item}}</view>
+        <block wx:for="{{item.red_flags_preview}}" wx:key="*this">
+          <view class="tag warning">{{item}}</view>
         </block>
       </view>
     </view>

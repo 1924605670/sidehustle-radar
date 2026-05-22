@@ -1,1 +1,38 @@
+.option-card {
+  padding: 20rpx;
+  margin-top: 14rpx;
+  border: 1rpx solid #d0d5dd;
+  border-radius: 14rpx;
+  background: #ffffff;
+}
 
+.option-card.active {
+  border-color: #0f766e;
+  background: #eefaf7;
+}
+
+.option-title {
+  color: #101828;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.result-block {
+  margin-top: 28rpx;
+}
+
+.avoid-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #edf1f7;
+  color: #182230;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.avoid-row:last-child {
+  border-bottom: 0;
+}

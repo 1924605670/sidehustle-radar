@@ -1,0 +1,107 @@
+<view class="page">
+  <block wx:if="{{loading}}">
+    <view class="panel">正在加载...</view>
+  </block>
+
+  <block wx:elif="{{project}}">
+    <view class="hero-panel">
+      <view class="eyebrow">项目风险档案</view>
+      <view class="detail-head">
+        <view class="title">{{project.title}}</view>
+        <view class="risk-pill {{project.risk_class}}">{{project.risk_level_text}}</view>
+      </view>
+      <view class="subtitle">{{project.summary}}</view>
+      <view class="metric-grid">
+        <view class="metric-item">
+          <view class="metric-value">{{project.risk_score}}</view>
+          <view class="metric-label">风险分</view>
+        </view>
+        <view class="metric-item">
+          <view class="metric-value">{{project.case_count || project.cases.length}}</view>
+          <view class="metric-label">案例数</view>
+        </view>
+        <view class="metric-item">
+          <view class="metric-value">{{project.red_flags.length}}</view>
+          <view class="metric-label">预警词</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-block" wx:if="{{project.cases.length}}">
+      <view class="section-title">真实风险案例</view>
+      <block wx:for="{{project.cases}}" wx:key="id">
+        <view class="case-card">
+          <view class="card-title">{{item.title}}</view>
+          <view class="meta-row">
+            <text>{{item.source_label}}</text>
+          </view>
+          <view class="subtitle">{{item.summary}}</view>
+          <view class="notice" wx:if="{{item.loss_or_consequence}}">{{item.loss_or_consequence}}</view>
+          <view>
+            <block wx:for="{{item.risk_points_preview}}" wx:key="*this">
+              <view class="tag danger">{{item}}</view>
+            </block>
+          </view>
+          <view class="divider"></view>
+          <view class="takeaway">{{item.takeaway}}</view>
+          <view class="source-copy" data-url="{{item.source_url}}" bindtap="copySource">复制公开来源链接</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">赚钱逻辑</view>
+      <view class="subtitle">{{project.money_logic}}</view>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">真实门槛</view>
+      <block wx:for="{{thresholdEntries}}" wx:key="label">
+        <view class="threshold-row">
+          <view class="threshold-label">{{item.label}}</view>
+          <view class="threshold-value">{{item.value}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">常见坑点</view>
+      <block wx:for="{{project.common_traps}}" wx:key="*this">
+        <view class="list-line">
+          <view class="list-index">{{index + 1}}</view>
+          <view>{{item}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">核验步骤</view>
+      <block wx:for="{{project.verification_steps}}" wx:key="*this">
+        <view class="list-line">
+          <view class="list-index">{{index + 1}}</view>
+          <view>{{item}}</view>
+        </view>
+      </block>
+      <view class="button-row">
+        <view class="secondary-button" bindtap="copyChecklist">复制清单</view>
+        <view class="primary-button" bindtap="goScan">测文案</view>
+      </view>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">适合与不适合</view>
+      <view class="fit-group" wx:if="{{project.suitable_for.length}}">
+        <view class="muted">更适合</view>
+        <block wx:for="{{project.suitable_for}}" wx:key="*this">
+          <view class="tag">{{item}}</view>
+        </block>
+      </view>
+      <view class="fit-group">
+        <view class="muted">不适合</view>
+        <block wx:for="{{project.not_suitable_for}}" wx:key="*this">
+          <view class="tag warning">{{item}}</view>
+        </block>
+      </view>
+    </view>
+  </block>
+</view>

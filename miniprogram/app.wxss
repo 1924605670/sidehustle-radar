@@ -1,25 +1,81 @@
 page {
-  background: #f6f7f9;
+  background: #f3f6fb;
   color: #182230;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
 }
 
 .page {
-  padding: 24rpx;
+  min-height: 100vh;
+  padding: 24rpx 24rpx 40rpx;
+  box-sizing: border-box;
 }
 
 .panel {
   background: #ffffff;
   border-radius: 16rpx;
-  padding: 28rpx;
+  padding: 24rpx;
   margin-bottom: 24rpx;
-  box-shadow: 0 8rpx 24rpx rgba(16, 24, 40, 0.05);
+  border: 1rpx solid #e4e9f2;
+  box-shadow: 0 10rpx 28rpx rgba(15, 23, 42, 0.04);
+}
+
+.hero-panel {
+  background: #102a43;
+  border-radius: 16rpx;
+  padding: 30rpx 28rpx;
+  margin-bottom: 24rpx;
+  color: #ffffff;
+  border: 1rpx solid rgba(255, 255, 255, 0.14);
+}
+
+.hero-panel .subtitle,
+.hero-panel .muted {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.hero-panel .eyebrow {
+  color: #8ee6d6;
 }
 
 .title {
-  font-size: 40rpx;
+  font-size: 38rpx;
   font-weight: 700;
   color: #101828;
+  line-height: 1.25;
+}
+
+.hero-panel .title {
+  color: #ffffff;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 18rpx;
+  color: #101828;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.section-block {
+  margin-bottom: 26rpx;
+}
+
+.eyebrow {
+  margin-bottom: 10rpx;
+  color: #0f766e;
+  font-size: 22rpx;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.muted {
+  color: #667085;
+  font-size: 24rpx;
+  line-height: 1.55;
 }
 
 .subtitle {
@@ -29,50 +85,136 @@ page {
   line-height: 1.55;
 }
 
-.button {
+.button,
+.primary-button,
+.secondary-button,
+.ghost-button {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 88rpx;
   border-radius: 12rpx;
-  background: #0f766e;
-  color: #ffffff;
-  font-size: 30rpx;
-  font-weight: 600;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  font-weight: 700;
 }
 
-.button.secondary {
+.button,
+.primary-button {
+  background: #0f766e;
+  color: #ffffff;
+}
+
+.button.secondary,
+.secondary-button {
   background: #e6f4f1;
   color: #0f766e;
 }
 
+.ghost-button {
+  background: #ffffff;
+  color: #344054;
+  border: 1rpx solid #d0d5dd;
+}
+
+.button-row {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 20rpx;
+}
+
+.button-row .button,
+.button-row .primary-button,
+.button-row .secondary-button,
+.button-row .ghost-button {
+  flex: 1;
+  margin-right: 16rpx;
+}
+
+.button-row .button:last-child,
+.button-row .primary-button:last-child,
+.button-row .secondary-button:last-child,
+.button-row .ghost-button:last-child {
+  margin-right: 0;
+}
+
 .input {
   min-height: 84rpx;
-  border: 2rpx solid #d0d5dd;
+  border: 1rpx solid #d0d5dd;
   border-radius: 12rpx;
   padding: 0 24rpx;
   background: #ffffff;
   font-size: 28rpx;
+  box-sizing: border-box;
 }
 
 .textarea {
-  min-height: 280rpx;
-  border: 2rpx solid #d0d5dd;
+  width: 100%;
+  min-height: 300rpx;
+  border: 1rpx solid #d0d5dd;
   border-radius: 12rpx;
   padding: 20rpx 24rpx;
   background: #ffffff;
   font-size: 28rpx;
   line-height: 1.55;
+  box-sizing: border-box;
 }
 
 .tag {
   display: inline-flex;
-  padding: 8rpx 16rpx;
-  border-radius: 999rpx;
+  align-items: center;
+  max-width: 100%;
+  padding: 8rpx 14rpx;
+  border-radius: 10rpx;
   margin: 8rpx 8rpx 0 0;
-  background: #eef4ff;
-  color: #175cd3;
+  background: #eef6ff;
+  color: #1849a9;
   font-size: 24rpx;
+  line-height: 1.35;
+  box-sizing: border-box;
+}
+
+.tag.warning {
+  background: #fff6e7;
+  color: #b54708;
+}
+
+.tag.danger {
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.risk-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112rpx;
+  height: 46rpx;
+  padding: 0 16rpx;
+  border-radius: 10rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.risk-pill.risk-low {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.risk-pill.risk-medium {
+  background: #fff6e7;
+  color: #b54708;
+}
+
+.risk-pill.risk-high {
+  background: #fff1f0;
+  color: #c4320a;
+}
+
+.risk-pill.risk-extreme {
+  background: #fee4e2;
+  color: #b42318;
 }
 
 .risk-low {
@@ -91,3 +233,127 @@ page {
   color: #b42318;
 }
 
+.metric-grid {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 22rpx;
+}
+
+.metric-item {
+  flex: 1;
+  min-height: 110rpx;
+  padding: 16rpx;
+  border-radius: 14rpx;
+  background: rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  margin-right: 14rpx;
+}
+
+.metric-item:last-child {
+  margin-right: 0;
+}
+
+.metric-value {
+  font-size: 34rpx;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.metric-label {
+  margin-top: 8rpx;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 22rpx;
+}
+
+.project-card,
+.case-card {
+  background: #ffffff;
+  border: 1rpx solid #e4e9f2;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18rpx;
+}
+
+.card-title {
+  flex: 1;
+  color: #101828;
+  font-size: 31rpx;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx 18rpx;
+  margin-top: 14rpx;
+  color: #667085;
+  font-size: 23rpx;
+  line-height: 1.4;
+}
+
+.divider {
+  height: 1rpx;
+  margin: 22rpx 0;
+  background: #edf1f7;
+}
+
+.list-line {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 14rpx;
+  color: #344054;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.list-index {
+  flex: 0 0 34rpx;
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 10rpx;
+  background: #eef6ff;
+  color: #1849a9;
+  text-align: center;
+  line-height: 34rpx;
+  font-size: 21rpx;
+  font-weight: 700;
+}
+
+.empty-state {
+  padding: 46rpx 24rpx;
+  color: #667085;
+  text-align: center;
+  line-height: 1.55;
+}
+
+.notice {
+  padding: 18rpx 20rpx;
+  border-radius: 14rpx;
+  background: #fff8eb;
+  color: #93370d;
+  font-size: 24rpx;
+  line-height: 1.55;
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 92rpx;
+  border-bottom: 1rpx solid #edf1f7;
+  color: #182230;
+  font-size: 28rpx;
+}
+
+.link-row:last-child {
+  border-bottom: 0;
+}

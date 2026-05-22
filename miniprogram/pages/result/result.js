@@ -1,19 +1,33 @@
+const { decorateCase, riskText } = require('../../utils/format');
+
 Page({
   data: {
     result: {},
-    levelText: {
-      low: '低风险',
-      medium: '中风险',
-      high: '高风险',
-      extreme: '极高风险'
-    }
+    hasResult: false
   },
 
   onLoad() {
     const result = wx.getStorageSync('last_scan_result') || {};
-    result.risk_level_text = this.data.levelText[result.risk_level] || '未知';
+    result.risk_level_text = riskText(result.risk_level);
+    result.risk_class = `risk-${result.risk_level || 'medium'}`;
+    result.related_cases = (result.related_cases || []).map(decorateCase);
     this.setData({
-      result
+      result,
+      hasResult: Boolean(result.risk_level)
+    });
+  },
+
+  goScan() {
+    wx.switchTab({ url: '/pages/scan/scan' });
+  },
+
+  copySource(event) {
+    const url = event.currentTarget.dataset.url;
+    wx.setClipboardData({
+      data: url,
+      success() {
+        wx.showToast({ title: '已复制来源链接', icon: 'none' });
+      }
     });
   }
 });

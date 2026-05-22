@@ -1,1 +1,11 @@
+.example-card {
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #edf1f7;
+  color: #344054;
+  font-size: 25rpx;
+  line-height: 1.55;
+}
 
+.example-card:last-child {
+  border-bottom: 0;
+}

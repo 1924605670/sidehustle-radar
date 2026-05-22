@@ -1,12 +1,60 @@
 <view class="page">
-  <view class="panel">
+  <view class="hero-panel">
+    <view class="eyebrow">低成本适配</view>
     <view class="title">副业适配测试</view>
-    <view class="subtitle">第一版会根据时间、技能和沟通意愿，推荐更适合低成本验证的方向。</view>
+    <view class="subtitle">先用时间、技能和风险底线筛掉不适合你的方向，再用 7 天计划验证是否值得继续。</view>
   </view>
-  <view class="panel">
-    <view class="subtitle">该功能的完整问卷会在下一阶段补齐。</view>
-    <view style="height:20rpx;"></view>
-    <view class="button" bindtap="mockTest">生成示例结果</view>
-  </view>
-</view>
 
+  <block wx:for="{{questions}}" wx:for-item="question" wx:for-index="questionIndex" wx:key="key">
+    <view class="panel">
+      <view class="section-title">{{questionIndex + 1}}. {{question.title}}</view>
+      <block wx:for="{{question.options}}" wx:for-item="option" wx:for-index="optionIndex" wx:key="value">
+        <view class="option-card {{question.selectedIndex === optionIndex ? 'active' : ''}}" data-question-index="{{questionIndex}}" data-option-index="{{optionIndex}}" bindtap="selectOption">
+          <view class="option-title">{{option.text}}</view>
+          <view class="muted">{{option.desc}}</view>
+        </view>
+      </block>
+    </view>
+  </block>
+
+  <view class="button-row">
+    <view class="ghost-button" bindtap="reset">重选</view>
+    <view class="primary-button" bindtap="submit">{{loading ? '生成中' : '生成建议'}}</view>
+  </view>
+
+  <block wx:if="{{result}}">
+    <view class="section-block result-block">
+      <view class="section-title">推荐先验证</view>
+      <block wx:for="{{result.recommended_projects}}" wx:key="id">
+        <view class="project-card" data-slug="{{item.slug}}" bindtap="openProject">
+          <view class="card-head">
+            <view class="card-title">{{item.title}}</view>
+            <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
+          </view>
+          <view class="subtitle">{{item.summary}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">建议避开</view>
+      <block wx:for="{{result.avoid_projects}}" wx:key="id">
+        <view class="avoid-row" data-slug="{{item.slug}}" bindtap="openProject">
+          <view>{{item.title}}</view>
+          <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">7 天验证计划</view>
+      <block wx:for="{{result.seven_day_plan}}" wx:key="*this">
+        <view class="list-line">
+          <view class="list-index">{{index + 1}}</view>
+          <view>{{item}}</view>
+        </view>
+      </block>
+      <view class="notice">{{result.disclaimer}}</view>
+    </view>
+  </block>
+</view>

@@ -53,6 +53,24 @@ def init_schema(conn: sqlite3.Connection) -> None:
             raw_json text not null
         );
 
+        create table if not exists cases (
+            id text primary key,
+            title text not null,
+            source_name text not null,
+            source_url text not null,
+            event_date text not null,
+            related_project_ids text not null,
+            related_categories text not null,
+            priority integer not null default 0,
+            status text not null,
+            updated_at text not null,
+            raw_json text not null
+        );
+
+        create index if not exists idx_cases_status on cases(status);
+        create index if not exists idx_cases_priority on cases(priority);
+        create index if not exists idx_cases_event_date on cases(event_date);
+
         create table if not exists search_logs (
             id integer primary key autoincrement,
             keyword text not null,
@@ -64,10 +82,12 @@ def init_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
-def seed_from_json(conn: sqlite3.Connection, data_dir: Path = DEFAULT_DATA_DIR) -> tuple[int, int]:
+def seed_from_json(conn: sqlite3.Connection, data_dir: Path = DEFAULT_DATA_DIR) -> tuple[int, int, int]:
     init_schema(conn)
     projects = json.loads((data_dir / "projects.seed.json").read_text(encoding="utf-8"))
     risk_rules = json.loads((data_dir / "risk-keywords.seed.json").read_text(encoding="utf-8"))
+    cases_path = data_dir / "cases.seed.json"
+    cases = json.loads(cases_path.read_text(encoding="utf-8")) if cases_path.exists() else []
 
     for project in projects:
         conn.execute(
@@ -135,8 +155,44 @@ def seed_from_json(conn: sqlite3.Connection, data_dir: Path = DEFAULT_DATA_DIR) 
             ),
         )
 
+    for case in cases:
+        conn.execute(
+            """
+            insert into cases (
+                id, title, source_name, source_url, event_date,
+                related_project_ids, related_categories, priority,
+                status, updated_at, raw_json
+            )
+            values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            on conflict(id) do update set
+                title = excluded.title,
+                source_name = excluded.source_name,
+                source_url = excluded.source_url,
+                event_date = excluded.event_date,
+                related_project_ids = excluded.related_project_ids,
+                related_categories = excluded.related_categories,
+                priority = excluded.priority,
+                status = excluded.status,
+                updated_at = excluded.updated_at,
+                raw_json = excluded.raw_json
+            """,
+            (
+                case["id"],
+                case["title"],
+                case["source_name"],
+                case["source_url"],
+                case.get("event_date", ""),
+                json.dumps(case.get("related_project_ids", []), ensure_ascii=False),
+                json.dumps(case.get("related_categories", []), ensure_ascii=False),
+                int(case.get("priority", 0)),
+                case.get("status", "published"),
+                case.get("updated_at", ""),
+                json.dumps(case, ensure_ascii=False),
+            ),
+        )
+
     conn.commit()
-    return len(projects), len(risk_rules)
+    return len(projects), len(risk_rules), len(cases)
 
 
 def load_projects(conn: sqlite3.Connection) -> list[dict]:
@@ -159,3 +215,47 @@ def load_risk_rules(conn: sqlite3.Connection) -> list[dict]:
         "select raw_json from risk_rules where enabled = 1 order by score desc"
     ).fetchall()
     return [json.loads(row["raw_json"]) for row in rows]
+
+
+def load_cases(conn: sqlite3.Connection, limit: int = 20) -> list[dict]:
+    rows = conn.execute(
+        """
+        select raw_json from cases
+        where status = 'published'
+        order by priority desc, event_date desc, updated_at desc
+        limit ?
+        """,
+        (limit,),
+    ).fetchall()
+    return [json.loads(row["raw_json"]) for row in rows]
+
+
+def load_cases_for_project(conn: sqlite3.Connection, project_id: str, limit: int = 6) -> list[dict]:
+    return [
+        case
+        for case in load_cases(conn, 200)
+        if project_id in set(case.get("related_project_ids", []))
+    ][:limit]
+
+
+def load_cases_for_categories(
+    conn: sqlite3.Connection,
+    categories: set[str],
+    project_ids: Optional[set[str]] = None,
+    limit: int = 5,
+) -> list[dict]:
+    project_ids = project_ids or set()
+    matched = []
+    for case in load_cases(conn, 200):
+        case_categories = set(case.get("related_categories", []))
+        case_projects = set(case.get("related_project_ids", []))
+        category_hits = len(categories & case_categories) if categories else 0
+        project_hits = len(project_ids & case_projects) if project_ids else 0
+        if category_hits or project_hits:
+            relevance = category_hits + project_hits * 3
+            matched.append((relevance, int(case.get("priority", 0)), case))
+    strong_matches = [item for item in matched if item[0] >= 2]
+    if strong_matches:
+        matched = strong_matches
+    matched.sort(key=lambda item: (item[0], item[1]), reverse=True)
+    return [case for _relevance, _priority, case in matched[:limit]]

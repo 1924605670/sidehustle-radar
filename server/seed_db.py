@@ -21,11 +21,10 @@ def main():
         db_file.parent.mkdir(parents=True, exist_ok=True)
 
     with connect(db_file) as conn:
-        project_count, rule_count = seed_from_json(conn, args.data_dir)
+        project_count, rule_count, case_count = seed_from_json(conn, args.data_dir)
 
-    print(f"Seeded {project_count} projects and {rule_count} risk rules.")
+    print(f"Seeded {project_count} projects, {rule_count} risk rules, and {case_count} cases.")
 
 
 if __name__ == "__main__":
     main()
-

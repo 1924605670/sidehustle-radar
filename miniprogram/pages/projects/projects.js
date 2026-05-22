@@ -1,16 +1,20 @@
 const { request } = require('../../utils/api');
+const { decorateProject } = require('../../utils/format');
 
 Page({
   data: {
     keyword: '',
     loading: false,
     items: [],
-    levelText: {
-      low: '低风险',
-      medium: '中风险',
-      high: '高风险',
-      extreme: '极高风险'
-    }
+    total: 0,
+    activeLevel: '',
+    levelFilters: [
+      { value: '', text: '全部' },
+      { value: 'extreme', text: '极高' },
+      { value: 'high', text: '高危' },
+      { value: 'medium', text: '中等' },
+      { value: 'low', text: '低风险' }
+    ]
   },
 
   onLoad(query) {
@@ -25,17 +29,30 @@ Page({
 
   search() {
     this.setData({ loading: true });
-    request(`/projects?q=${encodeURIComponent(this.data.keyword)}`)
+    const params = [`q=${encodeURIComponent(this.data.keyword)}`];
+    if (this.data.activeLevel) {
+      params.push(`risk_level=${this.data.activeLevel}`);
+    }
+    request(`/projects?${params.join('&')}`)
       .then((res) => {
-        const items = (res.items || []).map((item) => ({
-          ...item,
-          risk_level_text: this.data.levelText[item.risk_level] || '未知'
-        }));
-        this.setData({ items });
+        const items = (res.items || []).map(decorateProject);
+        this.setData({ items, total: res.total || items.length });
       })
       .catch(() => {
         wx.showToast({ title: '查询失败', icon: 'none' });
       })
       .finally(() => this.setData({ loading: false }));
+  },
+
+  selectLevel(event) {
+    const level = event.currentTarget.dataset.level || '';
+    this.setData({ activeLevel: level }, () => this.search());
+  },
+
+  openProject(event) {
+    const slug = event.currentTarget.dataset.slug;
+    wx.navigateTo({
+      url: `/pages/project-detail/project-detail?slug=${encodeURIComponent(slug)}`
+    });
   }
 });
