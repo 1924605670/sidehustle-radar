@@ -1,0 +1,24 @@
+<view class="page">
+  <view class="panel">
+    <view class="title">副业避坑雷达</view>
+    <view class="subtitle">看到副业或兼职广告，先查风险再决定。</view>
+  </view>
+
+  <view class="panel">
+    <input class="input" placeholder="搜索：小说推文、刷单返利、无人直播" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="goSearch" />
+    <view style="height: 20rpx;"></view>
+    <view class="button" bindtap="goSearch">查项目风险</view>
+    <view style="height: 16rpx;"></view>
+    <view class="button secondary" bindtap="goScan">粘贴文案测风险</view>
+  </view>
+
+  <view class="panel">
+    <view style="font-weight: 700;">热门查询</view>
+    <view>
+      <block wx:for="{{hotKeywords}}" wx:key="*this">
+        <view class="tag" data-keyword="{{item}}" bindtap="searchTag">{{item}}</view>
+      </block>
+    </view>
+  </view>
+</view>
+

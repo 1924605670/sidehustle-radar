@@ -1,0 +1,502 @@
+[
+  {
+    "id": "rk_advance_payment",
+    "keyword": "垫资",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 30,
+    "force_level": "high",
+    "explanation": "要求先垫资是网络兼职高危信号。",
+    "enabled": true
+  },
+  {
+    "id": "rk_deposit",
+    "keyword": "押金",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 25,
+    "force_level": "medium",
+    "explanation": "正规兼职通常不应先向求职者收取押金。",
+    "enabled": true
+  },
+  {
+    "id": "rk_recharge",
+    "keyword": "充值",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 25,
+    "force_level": "medium",
+    "explanation": "以任务、抢单、提现为由要求充值，需要高度谨慎。",
+    "enabled": true
+  },
+  {
+    "id": "rk_membership_fee",
+    "keyword": "会员费",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 15,
+    "force_level": null,
+    "explanation": "以开通会员才能接单为由收费，存在派单真实性风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_material_fee",
+    "keyword": "资料费",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 15,
+    "force_level": null,
+    "explanation": "打字、录入、配音等兼职若先收资料费，需谨慎。",
+    "enabled": true
+  },
+  {
+    "id": "rk_training_fee",
+    "keyword": "培训费",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 15,
+    "force_level": null,
+    "explanation": "以兼职或就业为名转向培训缴费，是常见风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_daily_high_income",
+    "keyword": "日结",
+    "match_type": "keyword",
+    "category": "high_return",
+    "score": 12,
+    "force_level": null,
+    "explanation": "日结本身不一定有问题，但与高收益、无门槛组合时风险升高。",
+    "enabled": true
+  },
+  {
+    "id": "rk_guaranteed_income",
+    "keyword": "保证收益",
+    "match_type": "keyword",
+    "category": "high_return",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "承诺保证收益属于高风险表达。",
+    "enabled": true
+  },
+  {
+    "id": "rk_stable_profit",
+    "keyword": "稳赚",
+    "match_type": "keyword",
+    "category": "high_return",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "稳赚、保本等表达常用于诱导投入。",
+    "enabled": true
+  },
+  {
+    "id": "rk_no_experience",
+    "keyword": "无需经验",
+    "match_type": "keyword",
+    "category": "low_barrier_claim",
+    "score": 8,
+    "force_level": null,
+    "explanation": "无门槛高收益文案需要结合其他信号判断。",
+    "enabled": true
+  },
+  {
+    "id": "rk_easy_money",
+    "keyword": "躺赚",
+    "match_type": "keyword",
+    "category": "high_return",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "躺赚类表达容易夸大收益和低估风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_brushing",
+    "keyword": "刷单",
+    "match_type": "keyword",
+    "category": "brushing_rebate",
+    "score": 40,
+    "force_level": "extreme",
+    "explanation": "刷单返利是高危网络兼职诈骗类型。",
+    "enabled": true
+  },
+  {
+    "id": "rk_rebate",
+    "keyword": "返利",
+    "match_type": "keyword",
+    "category": "brushing_rebate",
+    "score": 20,
+    "force_level": null,
+    "explanation": "返利需要结合垫资、任务、充值等词判断。",
+    "enabled": true
+  },
+  {
+    "id": "rk_task_commission",
+    "keyword": "做任务返佣",
+    "match_type": "keyword",
+    "category": "brushing_rebate",
+    "score": 35,
+    "force_level": "high",
+    "explanation": "做任务返佣常作为刷单返利入口。",
+    "enabled": true
+  },
+  {
+    "id": "rk_teacher_orders",
+    "keyword": "导师带单",
+    "match_type": "keyword",
+    "category": "guided_order",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "导师带单常用于建立信任并诱导继续投入。",
+    "enabled": true
+  },
+  {
+    "id": "rk_grab_orders",
+    "keyword": "抢单",
+    "match_type": "keyword",
+    "category": "task_platform",
+    "score": 20,
+    "force_level": null,
+    "explanation": "抢单与充值、补单组合时风险较高。",
+    "enabled": true
+  },
+  {
+    "id": "rk_supplement_order",
+    "keyword": "补单",
+    "match_type": "keyword",
+    "category": "task_platform",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "要求补单才能提现是高危信号。",
+    "enabled": true
+  },
+  {
+    "id": "rk_withdraw_frozen",
+    "keyword": "账户冻结",
+    "match_type": "keyword",
+    "category": "withdrawal_block",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "以账户冻结为由要求继续充值，风险很高。",
+    "enabled": true
+  },
+  {
+    "id": "rk_withdraw_fee",
+    "keyword": "提现手续费",
+    "match_type": "keyword",
+    "category": "withdrawal_block",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "以提现为由继续收费，需要谨慎核实。",
+    "enabled": true
+  },
+  {
+    "id": "rk_unknown_app",
+    "keyword": "下载APP",
+    "match_type": "keyword",
+    "category": "external_app",
+    "score": 15,
+    "force_level": null,
+    "explanation": "要求下载陌生 App 后完成任务，需要注意资金和隐私风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_private_group",
+    "keyword": "进群",
+    "match_type": "keyword",
+    "category": "external_group",
+    "score": 10,
+    "force_level": null,
+    "explanation": "从公开平台转到私聊群后，风险和维权难度会上升。",
+    "enabled": true
+  },
+  {
+    "id": "rk_internal_channel",
+    "keyword": "内部渠道",
+    "match_type": "keyword",
+    "category": "scarcity_claim",
+    "score": 15,
+    "force_level": null,
+    "explanation": "内部渠道常用于制造稀缺感，需核实来源。",
+    "enabled": true
+  },
+  {
+    "id": "rk_limited_slots",
+    "keyword": "名额有限",
+    "match_type": "keyword",
+    "category": "pressure_sale",
+    "score": 10,
+    "force_level": null,
+    "explanation": "用限时限额制造压力，不应在未核实前付款。",
+    "enabled": true
+  },
+  {
+    "id": "rk_develop_downline",
+    "keyword": "发展下线",
+    "match_type": "keyword",
+    "category": "pyramid",
+    "score": 30,
+    "force_level": "high",
+    "explanation": "以发展下线作为收益来源，存在传销或违规推广风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_team_split",
+    "keyword": "团队裂变",
+    "match_type": "keyword",
+    "category": "pyramid",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "团队裂变若与拉人返佣绑定，需要谨慎。",
+    "enabled": true
+  },
+  {
+    "id": "rk_invite_rebate",
+    "keyword": "拉人返佣",
+    "match_type": "keyword",
+    "category": "pyramid",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "主要靠拉人返佣而非真实服务，风险较高。",
+    "enabled": true
+  },
+  {
+    "id": "rk_bank_card",
+    "keyword": "银行卡",
+    "match_type": "keyword",
+    "category": "sensitive_info",
+    "score": 20,
+    "force_level": null,
+    "explanation": "兼职前要求提供银行卡信息，需要明确用途和主体。",
+    "enabled": true
+  },
+  {
+    "id": "rk_verification_code",
+    "keyword": "验证码",
+    "match_type": "keyword",
+    "category": "sensitive_info",
+    "score": 30,
+    "force_level": "high",
+    "explanation": "验证码不可提供给他人。",
+    "enabled": true
+  },
+  {
+    "id": "rk_id_card",
+    "keyword": "身份证",
+    "match_type": "keyword",
+    "category": "sensitive_info",
+    "score": 20,
+    "force_level": null,
+    "explanation": "提交身份证前应核实主体、用途和保存方式。",
+    "enabled": true
+  },
+  {
+    "id": "rk_face_verify",
+    "keyword": "人脸验证",
+    "match_type": "keyword",
+    "category": "sensitive_info",
+    "score": 30,
+    "force_level": "high",
+    "explanation": "不要为陌生人做人脸验证或实名注册。",
+    "enabled": true
+  },
+  {
+    "id": "rk_running_points",
+    "keyword": "跑分",
+    "match_type": "keyword",
+    "category": "illegal_fund_flow",
+    "score": 50,
+    "force_level": "extreme",
+    "explanation": "跑分可能涉及违法资金流转，不能参与。",
+    "enabled": true
+  },
+  {
+    "id": "rk_money_laundering",
+    "keyword": "刷流水",
+    "match_type": "keyword",
+    "category": "illegal_fund_flow",
+    "score": 50,
+    "force_level": "extreme",
+    "explanation": "刷流水、代收款等资金流转行为风险极高。",
+    "enabled": true
+  },
+  {
+    "id": "rk_usdt",
+    "keyword": "USDT",
+    "match_type": "keyword",
+    "category": "crypto",
+    "score": 25,
+    "force_level": "medium",
+    "explanation": "虚拟币相关兼职需警惕资金盘、洗钱和充值陷阱。",
+    "enabled": true
+  },
+  {
+    "id": "rk_gambling",
+    "keyword": "博彩",
+    "match_type": "keyword",
+    "category": "gambling",
+    "score": 50,
+    "force_level": "extreme",
+    "explanation": "博彩类内容不应作为副业参与。",
+    "enabled": true
+  },
+  {
+    "id": "rk_lottery",
+    "keyword": "彩票套利",
+    "match_type": "keyword",
+    "category": "gambling",
+    "score": 50,
+    "force_level": "extreme",
+    "explanation": "彩票套利类文案通常伴随充值和提现风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_overseas_high_salary",
+    "keyword": "境外高薪",
+    "match_type": "keyword",
+    "category": "overseas_recruitment",
+    "score": 40,
+    "force_level": "high",
+    "explanation": "境外高薪低门槛招聘存在人身和法律风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_passport",
+    "keyword": "护照代办",
+    "match_type": "keyword",
+    "category": "overseas_recruitment",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "陌生中介要求代办或保管护照，需要立即谨慎。",
+    "enabled": true
+  },
+  {
+    "id": "rk_paid_training_loan",
+    "keyword": "培训贷款",
+    "match_type": "keyword",
+    "category": "recruitment_to_training",
+    "score": 35,
+    "force_level": "high",
+    "explanation": "招聘转培训贷款是求职风险场景之一。",
+    "enabled": true
+  },
+  {
+    "id": "rk_guaranteed_job",
+    "keyword": "包就业",
+    "match_type": "keyword",
+    "category": "recruitment_to_training",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "包就业承诺需要警惕培训缴费或贷款风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_guaranteed_order",
+    "keyword": "包出单",
+    "match_type": "keyword",
+    "category": "false_promise",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "包出单属于收益承诺，需谨慎。",
+    "enabled": true
+  },
+  {
+    "id": "rk_guaranteed_followers",
+    "keyword": "包涨粉",
+    "match_type": "keyword",
+    "category": "false_promise",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "包涨粉可能涉及刷量、违规或夸大宣传。",
+    "enabled": true
+  },
+  {
+    "id": "rk_copyright_free_claim",
+    "keyword": "不用管版权",
+    "match_type": "keyword",
+    "category": "copyright",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "忽视版权会带来平台处罚和侵权风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_repost",
+    "keyword": "一键搬运",
+    "match_type": "keyword",
+    "category": "copyright",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "一键搬运类项目容易触发版权和平台规则风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_batch_register",
+    "keyword": "批量注册",
+    "match_type": "keyword",
+    "category": "platform_abuse",
+    "score": 20,
+    "force_level": "medium",
+    "explanation": "批量注册账号可能违反平台规则或涉及实名风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_avoid_detection",
+    "keyword": "规避检测",
+    "match_type": "keyword",
+    "category": "platform_abuse",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "规避平台检测属于高风险表达。",
+    "enabled": true
+  },
+  {
+    "id": "combo_brushing_rebate_advance",
+    "keyword": "刷单+返利|垫资|任务",
+    "match_type": "combo",
+    "category": "brushing_rebate",
+    "score": 80,
+    "force_level": "extreme",
+    "explanation": "刷单与返利、垫资或任务组合时，直接判定为极高风险。",
+    "enabled": true
+  },
+  {
+    "id": "combo_app_recharge",
+    "keyword": "下载APP+充值|抢单|提现",
+    "match_type": "combo",
+    "category": "external_app",
+    "score": 60,
+    "force_level": "high",
+    "explanation": "下载陌生 App 后要求充值、抢单或提现，风险很高。",
+    "enabled": true
+  },
+  {
+    "id": "combo_bank_running_points",
+    "keyword": "银行卡+跑分|刷流水|代收款",
+    "match_type": "combo",
+    "category": "illegal_fund_flow",
+    "score": 90,
+    "force_level": "extreme",
+    "explanation": "银行卡与跑分、刷流水、代收款组合时，极高风险。",
+    "enabled": true
+  },
+  {
+    "id": "combo_downline_rebate",
+    "keyword": "拉人|下线+返佣|团队",
+    "match_type": "combo",
+    "category": "pyramid",
+    "score": 55,
+    "force_level": "high",
+    "explanation": "拉人和返佣、团队收益绑定时，风险较高。",
+    "enabled": true
+  },
+  {
+    "id": "combo_guaranteed_high_income",
+    "keyword": "保证收益|稳赚+日结|高薪|月入",
+    "match_type": "combo",
+    "category": "false_promise",
+    "score": 55,
+    "force_level": "high",
+    "explanation": "收益承诺与高薪、日结组合时，存在明显夸大收益风险。",
+    "enabled": true
+  }
+]

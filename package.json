@@ -1,0 +1,13 @@
+{
+  "name": "sidehustle-radar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "副业避坑雷达 / SideHustle Radar",
+  "scripts": {
+    "test": "python3 -m unittest discover -s server/tests",
+    "validate:data": "python3 server/seed_db.py --check --data-dir data"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

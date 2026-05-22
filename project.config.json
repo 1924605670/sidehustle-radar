@@ -1,0 +1,13 @@
+{
+  "appid": "wx30321379334ec662",
+  "compileType": "miniprogram",
+  "miniprogramRoot": "miniprogram/",
+  "projectname": "sidehustle-radar",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  }
+}
+

@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="panel">
+    <input class="input" placeholder="输入副业或兼职名称" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="search" />
+  </view>
+
+  <block wx:if="{{loading}}">
+    <view class="panel">正在查询...</view>
+  </block>
+
+  <block wx:elif="{{items.length === 0}}">
+    <view class="panel">暂未收录这个项目。可以换个关键词试试。</view>
+  </block>
+
+  <block wx:else>
+    <view class="panel" wx:for="{{items}}" wx:key="id">
+      <view style="display:flex;justify-content:space-between;gap:20rpx;">
+        <view style="font-size:32rpx;font-weight:700;">{{item.title}}</view>
+        <view class="risk-{{item.risk_level}}" style="font-weight:700;">{{item.risk_level_text}}</view>
+      </view>
+      <view class="subtitle">{{item.summary}}</view>
+      <view>
+        <block wx:for="{{item.red_flags}}" wx:key="*this">
+          <view class="tag">{{item}}</view>
+        </block>
+      </view>
+    </view>
+  </block>
+</view>

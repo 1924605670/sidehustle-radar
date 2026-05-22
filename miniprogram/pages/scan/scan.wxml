@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="panel">
+    <view class="title">兼职文案体检</view>
+    <view class="subtitle">粘贴你看到的副业或兼职广告，系统会识别可疑点。请勿粘贴身份证、银行卡、验证码等敏感信息。</view>
+  </view>
+
+  <view class="panel">
+    <textarea class="textarea" placeholder="例如：点赞关注日结，导师带单，下载APP做任务返佣..." value="{{text}}" bindinput="onTextInput" maxlength="2000" />
+    <view style="height: 20rpx;"></view>
+    <view class="button" bindtap="scan">开始检测</view>
+  </view>
+</view>
+

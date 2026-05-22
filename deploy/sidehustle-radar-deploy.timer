@@ -1,0 +1,12 @@
+[Unit]
+Description=Check and deploy SideHustle Radar every minute
+
+[Timer]
+OnBootSec=60
+OnUnitActiveSec=60
+AccuracySec=10
+Unit=sidehustle-radar-deploy.service
+
+[Install]
+WantedBy=timers.target
+

@@ -1,0 +1,9 @@
+[Unit]
+Description=Deploy SideHustle Radar from GitHub
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sidehustle-radar/repo/deploy/pull_deploy.sh
+

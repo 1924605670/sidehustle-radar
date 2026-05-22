@@ -1,0 +1,12 @@
+<view class="page">
+  <view class="panel">
+    <view class="title">副业适配测试</view>
+    <view class="subtitle">第一版会根据时间、技能和沟通意愿，推荐更适合低成本验证的方向。</view>
+  </view>
+  <view class="panel">
+    <view class="subtitle">该功能的完整问卷会在下一阶段补齐。</view>
+    <view style="height:20rpx;"></view>
+    <view class="button" bindtap="mockTest">生成示例结果</view>
+  </view>
+</view>
+

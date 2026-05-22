@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/projects/projects",
+    "pages/scan/scan",
+    "pages/result/result",
+    "pages/fit/fit",
+    "pages/mine/mine"
+  ],
+  "window": {
+    "navigationBarTitleText": "副业避坑雷达",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f7f9"
+  },
+  "tabBar": {
+    "color": "#667085",
+    "selectedColor": "#0f766e",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/scan/scan",
+        "text": "测风险"
+      },
+      {
+        "pagePath": "pages/fit/fit",
+        "text": "适配"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+
