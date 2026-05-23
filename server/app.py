@@ -1,5 +1,6 @@
 import json
 import os
+import socket
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, unquote, urlparse
 
@@ -273,7 +274,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("access-control-allow-methods", "GET,POST,OPTIONS")
         self.send_header("access-control-allow-headers", "content-type")
         self.end_headers()
-        self.wfile.write(data)
+        try:
+            self.wfile.write(data)
+        except (BrokenPipeError, ConnectionResetError, socket.timeout):
+            pass
 
     def respond_empty(self, status=204):
         self.send_response(status)

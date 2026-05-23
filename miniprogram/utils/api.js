@@ -9,6 +9,7 @@ function request(path, options = {}) {
       url: `${apiBase()}${path}`,
       method: options.method || 'GET',
       data: options.data || {},
+      timeout: options.timeout || 12000,
       header: {
         'content-type': 'application/json'
       },
@@ -27,4 +28,3 @@ function request(path, options = {}) {
 module.exports = {
   request
 };
-

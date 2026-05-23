@@ -1,6 +1,8 @@
 import json
 import os
 import re
+import time
+from typing import Optional
 import urllib.error
 import urllib.request
 
@@ -51,6 +53,7 @@ def analyze_risk_with_llm(text: str, context: dict) -> dict:
             },
         ],
         "temperature": 0.2,
+        "max_completion_tokens": int(os.environ.get("LLM_MAX_OUTPUT_TOKENS", "360")),
         "stream": os.environ.get("LLM_STREAM", "1").lower() in {"1", "true", "yes", "on"},
     }
 
@@ -105,7 +108,7 @@ def build_prompt(text: str, context: dict) -> str:
 def post_chat_completion(base_url: str, api_key: str, payload: dict) -> dict:
     url = normalize_chat_url(base_url)
     data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    timeout = float(os.environ.get("LLM_TIMEOUT_SECONDS", "8"))
+    timeout = float(os.environ.get("LLM_TIMEOUT_SECONDS", "4"))
     req = urllib.request.Request(
         url,
         data=data,
@@ -117,7 +120,7 @@ def post_chat_completion(base_url: str, api_key: str, payload: dict) -> dict:
     )
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         if payload.get("stream"):
-            return parse_streaming_chat_response(resp)
+            return parse_streaming_chat_response(resp, timeout)
         return parse_chat_response(resp.read().decode("utf-8"))
 
 
@@ -137,9 +140,12 @@ def parse_chat_response(raw: str) -> dict:
     return json.loads(text)
 
 
-def parse_streaming_chat_response(resp) -> dict:
+def parse_streaming_chat_response(resp, timeout_seconds: Optional[float] = None) -> dict:
     chunks = []
+    deadline = time.monotonic() + (timeout_seconds or 4)
     while True:
+        if time.monotonic() > deadline:
+            raise TimeoutError("llm_stream_timeout")
         line = resp.readline()
         if not line:
             break
