@@ -10,7 +10,20 @@ Page({
       cases: 0,
       highRisk: 0
     },
+    trustNotes: ['近两年优先', '公开来源可追溯', '默认不保存原文'],
+    processSteps: [
+      { title: '先查项目', desc: '先看这个方向的风险级别、常见坑和真实门槛。' },
+      { title: '再测文案', desc: '把广告、私聊话术或课程文案拆成风险信号。' },
+      { title: '最后决定', desc: '结合案例证据和低成本验证步骤，再决定是否投入时间和钱。' }
+    ],
+    quickActions: [
+      { key: 'projects', title: '查项目', desc: '先看风险档案' },
+      { key: 'scan', title: '测文案', desc: '识别危险话术' },
+      { key: 'fit', title: '起步建议', desc: '先筛掉不适合的方向' },
+      { key: 'cases', title: '看案例', desc: '只看近期公开事件' }
+    ],
     topProjects: [],
+    starterProjects: [],
     latestCases: []
   },
 
@@ -24,18 +37,24 @@ Page({
   loadHomeData() {
     Promise.all([
       request('/projects?page_size=50'),
-      request('/cases?limit=3')
+      request('/cases?limit=4')
     ])
       .then(([projectRes, caseRes]) => {
-        const projects = projectRes.items || [];
+        const projects = (projectRes.items || []).map(decorateProject);
         const highRisk = projects.filter((item) => ['high', 'extreme'].indexOf(item.risk_level) >= 0).length;
+        const starterProjects = projects.filter((item) => {
+          return ['low', 'medium'].indexOf(item.risk_level) >= 0
+            && ['content_service', 'local_service', 'ai_side_job'].indexOf(item.category) >= 0;
+        });
+
         this.setData({
           stats: {
             projects: projectRes.total || projects.length,
             cases: caseRes.total || (caseRes.items || []).length,
             highRisk
           },
-          topProjects: projects.slice(0, 4).map(decorateProject),
+          topProjects: projects.filter((item) => ['high', 'extreme'].indexOf(item.risk_level) >= 0).slice(0, 4),
+          starterProjects: starterProjects.slice(0, 3),
           latestCases: (caseRes.items || []).map(decorateCase)
         });
       })
@@ -47,35 +66,63 @@ Page({
   },
 
   goSearch() {
-    const keyword = this.data.keyword.trim();
-    wx.navigateTo({
-      url: `/pages/projects/projects?q=${encodeURIComponent(keyword)}`
-    });
+    this.openProjects(this.data.keyword.trim());
   },
 
   searchTag(event) {
     const keyword = event.currentTarget.dataset.keyword;
-    wx.navigateTo({
-      url: `/pages/projects/projects?q=${encodeURIComponent(keyword)}`
+    this.openProjects(keyword);
+  },
+
+  openProjects(keyword = '', extra = {}) {
+    wx.setStorageSync('projects_search_state', {
+      keyword,
+      category: extra.category || '',
+      risk_level: extra.risk_level || ''
     });
+    wx.switchTab({ url: '/pages/projects/projects' });
   },
 
   goScan() {
-    wx.switchTab({
-      url: '/pages/scan/scan'
-    });
+    wx.switchTab({ url: '/pages/scan/scan' });
   },
 
-  goProjects() {
-    wx.navigateTo({
-      url: '/pages/projects/projects'
-    });
+  goFit() {
+    wx.navigateTo({ url: '/pages/fit/fit' });
+  },
+
+  goCases() {
+    this.openProjects('', { risk_level: 'high' });
+  },
+
+  handleQuickAction(event) {
+    const action = event.currentTarget.dataset.action;
+    if (action === 'scan') {
+      return this.goScan();
+    }
+    if (action === 'fit') {
+      return this.goFit();
+    }
+    if (action === 'cases') {
+      return this.goCases();
+    }
+    return this.openProjects('');
   },
 
   openProject(event) {
     const slug = event.currentTarget.dataset.slug;
     wx.navigateTo({
       url: `/pages/project-detail/project-detail?slug=${encodeURIComponent(slug)}`
+    });
+  },
+
+  copySource(event) {
+    const url = event.currentTarget.dataset.url;
+    wx.setClipboardData({
+      data: url,
+      success() {
+        wx.showToast({ title: '已复制来源链接', icon: 'none' });
+      }
     });
   }
 });

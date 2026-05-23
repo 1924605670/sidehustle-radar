@@ -1,8 +1,19 @@
-<view class="page">
-  <view class="hero-panel">
-    <view class="eyebrow">SIDEHUSTLE RADAR</view>
-    <view class="title">副业避坑雷达</view>
-    <view class="subtitle">看到副业、兼职、网赚广告，先查项目、看案例、再决定要不要投入时间和钱。</view>
+<view class="page home-page">
+  <view class="home-hero">
+    <view class="hero-copy">
+      <view class="eyebrow">副业判断工具</view>
+      <view class="hero-title">先判断，再投入</view>
+      <view class="hero-subtitle">这个产品不推荐“赚快钱项目”，而是帮你在看到副业广告、课程话术、项目介绍时，先做风险判断。</view>
+      <view class="trust-row">
+        <block wx:for="{{trustNotes}}" wx:key="*this">
+          <view class="trust-chip">{{item}}</view>
+        </block>
+      </view>
+    </view>
+    <image class="hero-image" src="/assets/scan-radar.png" mode="aspectFill" />
+  </view>
+
+  <view class="hero-panel compact-hero">
     <view class="metric-grid">
       <view class="metric-item">
         <view class="metric-value">{{stats.projects}}</view>
@@ -24,8 +35,31 @@
     <input class="input" placeholder="搜索：小说推文、刷单返利、无人直播" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="goSearch" />
     <view class="button-row">
       <view class="primary-button" bindtap="goSearch">查项目</view>
-      <view class="secondary-button" bindtap="goScan">测文案</view>
+      <view class="secondary-button" bindtap="goScan">测风险</view>
     </view>
+  </view>
+
+  <view class="section-title">开始判断</view>
+  <view class="action-grid">
+    <block wx:for="{{quickActions}}" wx:key="key">
+      <view class="action-card" data-action="{{item.key}}" bindtap="handleQuickAction">
+        <view class="action-title">{{item.title}}</view>
+        <view class="muted">{{item.desc}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="panel">
+    <view class="section-title">使用顺序</view>
+    <block wx:for="{{processSteps}}" wx:key="title">
+      <view class="process-line">
+        <view class="process-index">{{index + 1}}</view>
+        <view class="process-copy">
+          <view class="process-title">{{item.title}}</view>
+          <view class="muted">{{item.desc}}</view>
+        </view>
+      </view>
+    </block>
   </view>
 
   <view class="panel">
@@ -37,35 +71,56 @@
     </view>
   </view>
 
-  <view class="section-block">
-    <view class="section-title">
-      <text>重点风险项目</text>
-      <text class="muted" bindtap="goProjects">全部</text>
+  <view class="section-title">
+    <text>先避开这些方向</text>
+    <text class="muted" bindtap="goCases">高风险优先</text>
+  </view>
+  <block wx:for="{{topProjects}}" wx:key="id">
+    <view class="project-card project-card-strong" data-slug="{{item.slug}}" bindtap="openProject">
+      <view class="card-topline">
+        <view class="tag warning plain-tag">{{item.category_text}}</view>
+        <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
+      </view>
+      <view class="card-title">{{item.title}}</view>
+      <view class="subtitle">{{item.summary}}</view>
+      <view class="meta-row">
+        <text>风险分 {{item.risk_score}}</text>
+        <text wx:if="{{item.case_count}}">{{item.case_count}} 个案例</text>
+        <text>{{item.decision_text}}</text>
+      </view>
     </view>
-    <block wx:for="{{topProjects}}" wx:key="id">
-      <view class="project-card" data-slug="{{item.slug}}" bindtap="openProject">
-        <view class="card-head">
-          <view class="card-title">{{item.title}}</view>
+  </block>
+
+  <view class="section-block" wx:if="{{starterProjects.length}}">
+    <view class="section-title">
+      <text>更适合先小步验证</text>
+      <text class="muted" bindtap="goFit">做起步建议</text>
+    </view>
+    <block wx:for="{{starterProjects}}" wx:key="id">
+      <view class="project-card starter-card" data-slug="{{item.slug}}" bindtap="openProject">
+        <view class="card-topline">
+          <view class="tag plain-tag">{{item.category_text}}</view>
           <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
         </view>
+        <view class="card-title">{{item.title}}</view>
         <view class="subtitle">{{item.summary}}</view>
         <view class="meta-row">
-          <text>风险分 {{item.risk_score}}</text>
-          <text wx:if="{{item.case_count}}">{{item.case_count}} 个案例</text>
+          <text>{{item.decision_text}}</text>
         </view>
       </view>
     </block>
   </view>
 
   <view class="section-block" wx:if="{{latestCases.length}}">
-    <view class="section-title">最新案例</view>
+    <view class="section-title">最近两年公开案例</view>
     <block wx:for="{{latestCases}}" wx:key="id">
-      <view class="case-card">
+      <view class="case-card compact-case">
         <view class="card-title">{{item.title}}</view>
         <view class="meta-row">
           <text>{{item.source_label}}</text>
         </view>
         <view class="subtitle">{{item.summary}}</view>
+        <view class="source-copy" data-url="{{item.source_url}}" bindtap="copySource">复制公开来源链接</view>
       </view>
     </block>
   </view>

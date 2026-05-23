@@ -57,6 +57,14 @@
   - 真实案例
 - [x] 最近查看：
   - 本地缓存即可。
+- [x] 首页产品论证调整：
+  - 首屏强调“先判断，再投入”
+  - 展示判断路径，而不是单纯推荐项目
+  - 区分高危方向和可小步验证方向
+- [x] 项目库升级为核心 Tab：
+  - 支持方向筛选
+  - 支持风险筛选
+  - 列表直接展示判断建议、案例数和分类
 
 验收：
 
@@ -197,11 +205,11 @@ MVP 可先做简易后台或使用数据库管理界面。
 | 页面 | 路由建议 | 优先级 |
 |---|---|---|
 | 首页 | `/pages/index/index` | P0 |
-| 搜索结果 | `/pages/projects/list` | P0 |
+| 项目风险库 | `/pages/projects/projects` | P0 |
 | 项目详情 | `/pages/projects/detail` | P0 |
 | 文案检测 | `/pages/scan/input` | P0 |
 | 检测结果 | `/pages/scan/result` | P0 |
-| 适配测试 | `/pages/fit/test` | P1 |
+| 适配测试 | `/pages/fit/test` | P1，次级入口 |
 | 适配结果 | `/pages/fit/result` | P1 |
 | 收藏 | `/pages/user/favorites` | P1 |
 | 最近查看 | `/pages/user/history` | P1 |

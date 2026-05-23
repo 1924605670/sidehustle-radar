@@ -1,13 +1,29 @@
+.library-page {
+  padding-top: 18rpx;
+}
+
+.library-hero {
+  margin-bottom: 18rpx;
+}
+
+.compact-title {
+  margin-bottom: 12rpx;
+  font-size: 27rpx;
+}
+
+.second-title {
+  margin-top: 20rpx;
+}
+
 .filter-row {
   display: flex;
   flex-wrap: wrap;
   gap: 12rpx;
-  margin-top: 20rpx;
 }
 
 .filter-chip {
-  height: 58rpx;
-  padding: 0 20rpx;
+  min-height: 58rpx;
+  padding: 0 18rpx;
   border-radius: 12rpx;
   background: #f2f4f7;
   color: #475467;
@@ -18,6 +34,22 @@
 .filter-chip.active {
   background: #0f766e;
   color: #ffffff;
+}
+
+.slim-row {
+  margin-top: 14rpx;
+}
+
+.card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.plain-tag {
+  margin: 0;
 }
 
 .case-mini {

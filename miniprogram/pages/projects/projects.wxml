@@ -1,15 +1,41 @@
-<view class="page">
+<view class="page library-page">
+  <view class="hero-panel library-hero">
+    <view class="eyebrow">项目风险库</view>
+    <view class="title">先看风险，再决定要不要继续</view>
+    <view class="subtitle">这里不是副业推荐榜，而是把高频项目拆成风险、门槛、案例和低成本验证步骤。</view>
+  </view>
+
   <view class="panel">
-    <view class="section-title">项目风险库</view>
-    <input class="input" placeholder="输入副业或兼职名称" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="search" />
+    <view class="section-title">搜索项目</view>
+    <input class="input" placeholder="输入副业、兼职或课程方向" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="search" />
     <view class="button-row">
+      <view class="ghost-button" bindtap="clearKeyword">清空</view>
       <view class="primary-button" bindtap="search">搜索</view>
     </view>
+    <view class="button-row slim-row">
+      <view class="secondary-button" bindtap="goScan">测一段文案</view>
+      <view class="ghost-button" bindtap="goFit">起步建议</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="section-title compact-title">先按方向筛</view>
+    <view class="filter-row">
+      <block wx:for="{{categoryFilters}}" wx:key="value">
+        <view class="filter-chip {{activeCategory === item.value ? 'active' : ''}}" data-category="{{item.value}}" bindtap="selectCategory">{{item.text}}</view>
+      </block>
+    </view>
+    <view class="section-title compact-title second-title">再按风险筛</view>
     <view class="filter-row">
       <block wx:for="{{levelFilters}}" wx:key="value">
         <view class="filter-chip {{activeLevel === item.value ? 'active' : ''}}" data-level="{{item.value}}" bindtap="selectLevel">{{item.text}}</view>
       </block>
     </view>
+  </view>
+
+  <view class="section-title">
+    <text>查询结果</text>
+    <text class="muted">{{loading ? '加载中' : total + ' 项'}}</text>
   </view>
 
   <block wx:if="{{loading}}">
@@ -18,27 +44,28 @@
 
   <block wx:elif="{{items.length === 0}}">
     <view class="panel">
-      <view class="empty-state">暂未收录这个项目。可以换个关键词，或把看到的完整文案拿去“测风险”。</view>
+      <view class="empty-state">暂未收录这个项目。可以先测文案，或者换一个更像用户会搜索的关键词。</view>
+      <view class="button-row">
+        <view class="secondary-button" bindtap="goScan">去检测</view>
+      </view>
     </view>
   </block>
 
   <block wx:else>
-    <view class="section-title">
-      <text>查询结果</text>
-      <text class="muted">{{total}} 项</text>
-    </view>
     <view class="project-card" wx:for="{{items}}" wx:key="id" data-slug="{{item.slug}}" bindtap="openProject">
-      <view class="card-head">
-        <view class="card-title">{{item.title}}</view>
+      <view class="card-topline">
+        <view class="tag plain-tag">{{item.category_text}}</view>
         <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
       </view>
+      <view class="card-title">{{item.title}}</view>
       <view class="subtitle">{{item.summary}}</view>
       <view class="meta-row">
         <text>风险分 {{item.risk_score}}</text>
         <text>{{item.case_count}} 个案例</text>
+        <text>{{item.decision_text}}</text>
       </view>
       <view wx:if="{{item.top_case}}" class="case-mini">
-        <view class="muted">关联案例</view>
+        <view class="muted">最近关联案例</view>
         <view class="case-mini-title">{{item.top_case.title}}</view>
       </view>
       <view>

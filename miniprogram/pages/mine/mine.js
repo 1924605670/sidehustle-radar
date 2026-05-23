@@ -9,6 +9,12 @@ Page({
       scans: 0
     },
     recentProjects: [],
+    quickTools: [
+      { key: 'scan', title: '检测文案', desc: '把广告话术拆成风险信号' },
+      { key: 'projects', title: '项目库', desc: '直接查项目风险档案' },
+      { key: 'fit', title: '起步建议', desc: '先筛掉不适合的方向' },
+      { key: 'feedback', title: '反馈模板', desc: '补项目或补案例时可直接用' }
+    ],
     principles: [
       '凡是先交钱、充值、押金、垫资，先停止。',
       '凡是要银行卡、验证码、人脸、收款码，不参与。',
@@ -43,6 +49,20 @@ Page({
       .catch(() => {});
   },
 
+  handleQuickTool(event) {
+    const action = event.currentTarget.dataset.action;
+    if (action === 'scan') {
+      return this.goScan();
+    }
+    if (action === 'projects') {
+      return this.goProjects();
+    }
+    if (action === 'fit') {
+      return this.goFit();
+    }
+    return this.copyFeedback();
+  },
+
   openProject(event) {
     const slug = event.currentTarget.dataset.slug;
     wx.navigateTo({
@@ -51,7 +71,7 @@ Page({
   },
 
   goProjects() {
-    wx.navigateTo({ url: '/pages/projects/projects' });
+    wx.switchTab({ url: '/pages/projects/projects' });
   },
 
   goScan() {
@@ -59,7 +79,7 @@ Page({
   },
 
   goFit() {
-    wx.switchTab({ url: '/pages/fit/fit' });
+    wx.navigateTo({ url: '/pages/fit/fit' });
   },
 
   clearRecent() {
@@ -70,7 +90,7 @@ Page({
 
   copyFeedback() {
     wx.setClipboardData({
-      data: '请在项目库中补充：项目名称、看到的平台、具体文案、是否要求付费/下载App/提供信息。',
+      data: '请补充：项目名称、看到的平台、具体文案、是否要求付费/下载App/提供信息、对应公开来源。',
       success() {
         wx.showToast({ title: '已复制反馈模板', icon: 'none' });
       }

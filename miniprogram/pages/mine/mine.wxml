@@ -1,8 +1,8 @@
-<view class="page">
+<view class="page mine-page">
   <view class="hero-panel">
-    <view class="eyebrow">我的雷达</view>
-    <view class="title">风险记录与工具</view>
-    <view class="subtitle">这里不做接单撮合，只保留你用来判断项目的工具、记录和说明。</view>
+    <view class="eyebrow">我的判断记录</view>
+    <view class="title">工具、记录和原则</view>
+    <view class="subtitle">这里不做接单撮合，只保留你用来判断项目的工具入口、最近查看和避坑原则。</view>
     <view class="metric-grid">
       <view class="metric-item">
         <view class="metric-value">{{stats.projects}}</view>
@@ -19,20 +19,14 @@
     </view>
   </view>
 
-  <view class="panel">
-    <view class="section-title">常用入口</view>
-    <view class="link-row" bindtap="goScan">
-      <text>粘贴文案测风险</text>
-      <text class="muted">进入</text>
-    </view>
-    <view class="link-row" bindtap="goProjects">
-      <text>查看项目风险库</text>
-      <text class="muted">进入</text>
-    </view>
-    <view class="link-row" bindtap="goFit">
-      <text>做副业适配测试</text>
-      <text class="muted">进入</text>
-    </view>
+  <view class="section-title">常用工具</view>
+  <view class="tool-grid">
+    <block wx:for="{{quickTools}}" wx:key="key">
+      <view class="tool-card" data-action="{{item.key}}" bindtap="handleQuickTool">
+        <view class="tool-title">{{item.title}}</view>
+        <view class="muted">{{item.desc}}</view>
+      </view>
+    </block>
   </view>
 
   <view class="section-block" wx:if="{{recentProjects.length}}">
@@ -42,10 +36,11 @@
     </view>
     <block wx:for="{{recentProjects}}" wx:key="id">
       <view class="project-card" data-slug="{{item.slug}}" bindtap="openProject">
-        <view class="card-head">
-          <view class="card-title">{{item.title}}</view>
+        <view class="card-topline">
+          <view class="tag plain-tag">{{item.category_text}}</view>
           <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
         </view>
+        <view class="card-title">{{item.title}}</view>
         <view class="subtitle">{{item.summary}}</view>
       </view>
     </block>
@@ -63,11 +58,8 @@
 
   <view class="panel">
     <view class="section-title">数据与隐私</view>
-    <view class="subtitle">案例来自公开机关、法院、平台治理公告或主流媒体报道，展示时保留来源名称和时间，方便后续维护。</view>
-    <view class="subtitle">风险检测不保存原始文案，仅在本机保留最近查看和检测次数。</view>
+    <view class="subtitle">案例来自公开机关、法院、平台治理公告或主流媒体，产品优先展示近两年案例，方便持续维护和复核。</view>
+    <view class="subtitle">风险检测默认不保存原始文案，只在本机保留最近查看和检测次数。</view>
     <view class="notice">本工具只用于风险识别和低成本验证提醒，不承诺收益，不提供兼职撮合，也不替代法律意见。</view>
-    <view class="button-row">
-      <view class="secondary-button" bindtap="copyFeedback">复制反馈模板</view>
-    </view>
   </view>
 </view>

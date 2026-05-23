@@ -5,8 +5,36 @@ const LEVEL_TEXT = {
   extreme: '极高风险'
 };
 
+const CATEGORY_TEXT = {
+  high_risk_part_time: '高危套路',
+  creator_monetization: '内容变现',
+  ai_side_job: 'AI 副业',
+  survey_and_task: '任务平台',
+  ecommerce: '电商项目',
+  content_service: '接单服务',
+  local_service: '本地服务',
+  game_service: '游戏服务'
+};
+
 function riskText(level) {
   return LEVEL_TEXT[level] || '未知';
+}
+
+function categoryText(category) {
+  return CATEGORY_TEXT[category] || '其他方向';
+}
+
+function decisionText(level) {
+  if (level === 'extreme') {
+    return '建议直接避开';
+  }
+  if (level === 'high') {
+    return '先看证据再决定';
+  }
+  if (level === 'medium') {
+    return '先小步验证';
+  }
+  return '可先低成本试单';
 }
 
 function decorateCase(item) {
@@ -24,6 +52,8 @@ function decorateProject(item) {
     ...item,
     risk_level_text: riskText(item.risk_level),
     risk_class: `risk-${item.risk_level || 'medium'}`,
+    category_text: categoryText(item.category),
+    decision_text: decisionText(item.risk_level),
     red_flags_preview: redFlags.slice(0, 4),
     top_case: item.top_case ? decorateCase(item.top_case) : null
   };
@@ -46,5 +76,7 @@ module.exports = {
   decorateCase,
   decorateProject,
   rememberProject,
-  riskText
+  riskText,
+  categoryText,
+  decisionText
 };
