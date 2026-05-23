@@ -1,0 +1,80 @@
+[
+  {
+    "candidate_id": "cand_20260523_001",
+    "type": "project",
+    "title": "AI 副业课程/陪跑",
+    "source_name": "央视网",
+    "source_url": "https://news.cctv.cn/2025/12/21/ARTImAZDqcWdrs8bbHmspx9L251221.shtml",
+    "found_at": "2026-05-23",
+    "event_date": "2025-12",
+    "keywords": ["AI副业", "AI变现", "高价课程", "陪跑"],
+    "risk_categories": ["false_promise", "payment_first", "pressure_sale"],
+    "summary": "AI 工具热潮下，高价课程常用快速变现、内部渠道、包接单等话术吸引付费。",
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_002",
+    "type": "project",
+    "title": "短视频/短剧切片授权",
+    "source_name": "中国新闻网",
+    "source_url": "https://www.chinanews.com.cn/sh/2025/04-29/10407899.shtml",
+    "found_at": "2026-05-23",
+    "event_date": "2025-04",
+    "keywords": ["短剧切片", "直播切片", "授权剪辑", "短视频搬运"],
+    "risk_categories": ["copyright", "platform_abuse"],
+    "summary": "近期短视频版权判例可作为切片授权、搬运变现项目的风险依据。",
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_003",
+    "type": "project",
+    "title": "数字人直播工具",
+    "source_name": "央视网",
+    "source_url": "https://news.cctv.cn/2025/03/27/ARTIhm8HIchA4kb70EA89JFb250327.shtml",
+    "found_at": "2026-05-23",
+    "event_date": "2025-03",
+    "keywords": ["数字人直播", "无人直播", "录播", "挂机带货"],
+    "risk_categories": ["platform_abuse", "false_promise", "copyright"],
+    "summary": "平台大规模处置无人直播、数字人违规录播，可支撑工具类副业风险说明。",
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_004",
+    "type": "project",
+    "title": "探店达人/本地生活接单",
+    "source_name": "待补充平台规则或监管案例",
+    "source_url": "",
+    "found_at": "2026-05-23",
+    "event_date": "2026-05",
+    "keywords": ["探店达人", "本地生活达人", "团购推广", "门店种草"],
+    "risk_categories": ["false_promise", "platform_abuse"],
+    "summary": "用户搜索概率高，先入库为中风险项目，后续补平台规则、虚假宣传或刷好评案例。",
+    "review_status": "needs_source"
+  },
+  {
+    "candidate_id": "cand_20260523_005",
+    "type": "project",
+    "title": "游戏搬砖/代练",
+    "source_name": "待补充司法或平台案例",
+    "source_url": "",
+    "found_at": "2026-05-23",
+    "event_date": "2026-05",
+    "keywords": ["游戏搬砖", "手游搬砖", "游戏代练", "脚本打金"],
+    "risk_categories": ["payment_first", "platform_abuse", "sensitive_info"],
+    "summary": "真实需求存在，但常见押金派单、脚本封号、账号交易纠纷，需要继续补近两年案例。",
+    "review_status": "needs_source"
+  },
+  {
+    "candidate_id": "cand_20260523_006",
+    "type": "project",
+    "title": "宠物上门喂养",
+    "source_name": "待补充本地服务平台规则",
+    "source_url": "",
+    "found_at": "2026-05-23",
+    "event_date": "2026-05",
+    "keywords": ["上门喂猫", "宠物喂养", "宠物寄养", "遛狗接单"],
+    "risk_categories": ["local_service", "privacy"],
+    "summary": "低风险可验证本地服务方向，后续补钥匙交接、责任边界、平台外交易风险案例。",
+    "review_status": "needs_source"
+  }
+]

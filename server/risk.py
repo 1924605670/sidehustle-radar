@@ -141,5 +141,32 @@ def build_questions() -> list[str]:
     ]
 
 
+def risk_signal_phrases(signal_ids: list[str]) -> list[str]:
+    mapping = {
+        "pay_first": "要求先付款、押金、充值或垫资",
+        "unknown_app": "要求下载陌生 App 或跳到外部平台",
+        "guided_order": "导师带单、派单、抢单、补单",
+        "high_return": "承诺稳赚、高日结、快速回本",
+        "sensitive_info": "索要银行卡、验证码、身份证或人脸验证",
+        "invite_rebate": "通过拉人返佣、发展下线或团队裂变赚钱",
+        "copyright": "去水印搬运、无授权切片或盗用素材",
+        "course": "高价课程、陪跑、内部渠道并承诺收益",
+    }
+    return [mapping[signal_id] for signal_id in signal_ids if signal_id in mapping]
+
+
+def platform_text(platform: str) -> str:
+    mapping = {
+        "unknown": "不确定来源",
+        "wechat": "微信群",
+        "moments": "朋友圈",
+        "xiaohongshu": "小红书",
+        "douyin": "抖音",
+        "bilibili": "B站",
+        "recruitment": "招聘平台",
+    }
+    return mapping.get(platform or "unknown", platform or "不确定来源")
+
+
 def hash_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()

@@ -16,6 +16,44 @@
   flex: 1;
 }
 
+.result-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+
+.result-context text {
+  padding: 8rpx 14rpx;
+  border-radius: 10rpx;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 22rpx;
+}
+
+.evidence-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 14rpx 0;
+  color: #344054;
+  font-size: 26rpx;
+  line-height: 1.5;
+  border-bottom: 1rpx solid #edf1f7;
+}
+
+.evidence-line:last-child {
+  border-bottom: 0;
+}
+
+.evidence-dot {
+  width: 14rpx;
+  height: 14rpx;
+  margin: 12rpx 14rpx 0 0;
+  border-radius: 50%;
+  background: #f79009;
+  flex: 0 0 14rpx;
+}
+
 .rule-card {
   padding: 18rpx 0;
   border-bottom: 1rpx solid #edf1f7;

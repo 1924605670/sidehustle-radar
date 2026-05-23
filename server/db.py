@@ -222,7 +222,7 @@ def load_cases(conn: sqlite3.Connection, limit: int = 20) -> list[dict]:
         """
         select raw_json from cases
         where status = 'published'
-        order by priority desc, event_date desc, updated_at desc
+        order by event_date desc, priority desc, updated_at desc
         limit ?
         """,
         (limit,),

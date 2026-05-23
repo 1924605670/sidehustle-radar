@@ -1,19 +1,63 @@
-<view class="page">
-  <view class="hero-panel">
-    <view class="eyebrow">文案风险体检</view>
-    <view class="title">兼职文案体检</view>
-    <view class="subtitle">粘贴你看到的副业或兼职广告，系统会识别可疑点。请勿粘贴身份证、银行卡、验证码等敏感信息。</view>
+<view class="page scan-page">
+  <view class="scan-hero">
+    <view class="hero-copy">
+      <view class="eyebrow">风险检测工作台</view>
+      <view class="hero-title">把副业广告拆成可核验信号</view>
+      <view class="hero-subtitle">支持文案、项目名和红线自查。请勿粘贴身份证、银行卡、验证码等敏感信息。</view>
+    </view>
+    <image class="hero-image" src="/assets/scan-radar.png" mode="aspectFill" />
   </view>
 
   <view class="panel">
-    <view class="section-title">
-      <text>粘贴文案</text>
-      <text class="muted">{{text.length}}/2000</text>
+    <view class="segmented">
+      <block wx:for="{{modes}}" wx:key="key">
+        <view class="segmented-item {{activeMode === item.key ? 'active' : ''}}" data-mode="{{item.key}}" bindtap="switchMode">{{item.text}}</view>
+      </block>
     </view>
-    <textarea class="textarea" placeholder="例如：点赞关注日结，导师带单，下载APP做任务返佣..." value="{{text}}" bindinput="onTextInput" maxlength="2000" />
+
+    <view class="field-block" wx:if="{{activeMode !== 'copy'}}">
+      <view class="section-title compact">
+        <text>项目名称</text>
+        <text class="muted">可只填关键词</text>
+      </view>
+      <input class="input" placeholder="例如：AI副业课、短剧切片、无人直播" value="{{projectName}}" bindinput="onProjectInput" />
+    </view>
+
+    <view class="field-block" wx:if="{{activeMode !== 'project'}}">
+      <view class="section-title compact">
+        <text>{{activeMode === 'checklist' ? '补充描述' : '粘贴文案'}}</text>
+        <text class="muted">{{text.length}}/2000</text>
+      </view>
+      <textarea class="textarea scan-textarea" placeholder="粘贴你看到的副业广告、招聘话术或私聊内容..." value="{{text}}" bindinput="onTextInput" maxlength="2000" />
+    </view>
+
+    <view class="field-block">
+      <view class="section-title compact">来源平台</view>
+      <view class="chip-grid">
+        <block wx:for="{{platforms}}" wx:key="key">
+          <view class="choice-chip {{selectedPlatform === item.key ? 'active' : ''}}" data-platform="{{item.key}}" bindtap="selectPlatform">{{item.text}}</view>
+        </block>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="section-title compact">
+        <text>已出现的红线</text>
+        <text class="muted">可多选</text>
+      </view>
+      <view class="signal-grid">
+        <block wx:for="{{signalOptions}}" wx:key="key">
+          <view class="signal-chip {{item.active ? 'active' : ''}}" data-key="{{item.key}}" bindtap="toggleSignal">
+            <view class="signal-dot"></view>
+            <text>{{item.text}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
     <view class="button-row">
-      <view class="ghost-button" bindtap="clearText">清空</view>
-      <view class="primary-button" bindtap="scan">开始检测</view>
+      <view class="ghost-button" bindtap="clearText">重置</view>
+      <view class="primary-button" bindtap="scan">立即检测</view>
     </view>
   </view>
 
@@ -23,6 +67,26 @@
       <view class="example-card" data-text="{{item}}" bindtap="useExample">{{item}}</view>
     </block>
   </view>
+
+  <view class="section-title">
+    <text>近期风险案例</text>
+    <text class="muted" wx:if="{{loadingCases}}">加载中</text>
+  </view>
+  <block wx:for="{{latestCases}}" wx:key="id">
+    <view class="case-card compact-case">
+      <view class="card-title">{{item.title}}</view>
+      <view class="meta-row">
+        <text>{{item.source_label}}</text>
+      </view>
+      <view class="subtitle">{{item.summary}}</view>
+      <view>
+        <block wx:for="{{item.risk_points_preview}}" wx:key="*this">
+          <view class="tag danger">{{item}}</view>
+        </block>
+      </view>
+      <view class="source-copy" data-url="{{item.source_url}}" bindtap="copySource">复制公开来源链接</view>
+    </view>
+  </block>
 
   <view class="notice">
     检测结果只保存特征摘要，不保存原文。涉及转账、押金、下载陌生 App、银行卡或验证码时，先停止再核实。

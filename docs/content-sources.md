@@ -57,9 +57,20 @@
   - AI 输出需要避免违法和不良信息。
   - 生成内容应服务于风险识别、防范建议，不输出违规操作步骤。
 
+## S007 近期内容变现与 AI 副业风险线索
+
+- 央视网 AI 副业培训乱象线索：https://news.cctv.cn/2025/12/21/ARTImAZDqcWdrs8bbHmspx9L251221.shtml
+- 央视网无人直播/数字人违规录播处置：https://news.cctv.cn/2025/03/27/ARTIhm8HIchA4kb70EA89JFb250327.shtml
+- 中国新闻网短视频搬运版权判例：https://www.chinanews.com.cn/sh/2025/04-29/10407899.shtml
+- 类型：近两年案例和平台治理线索
+- 可沉淀规则：
+  - AI 副业课程要重点识别“快速变现、内部渠道、包接单、保底收益”。
+  - 数字人/无人直播要重点识别“挂机、录播伪装实时、盗用声音/形象、包起号”。
+  - 短剧切片、直播切片要重点核验授权主体、授权范围和平台规则。
+
 ## 案例库来源
 
-案例数据维护在 `data/cases.seed.json`，字段包括 `source_name`、`source_url`、`event_date`、`loss_or_consequence` 和 `risk_points`。MVP 已覆盖刷单返利、跑分、代实名、招转培、境外高薪、视频搬运、无人直播、AI 声音/图片、虚拟币、打字员兼职、聊天员兼职、博彩代理等方向。
+案例数据维护在 `data/cases.seed.json`，字段包括 `source_name`、`source_url`、`event_date`、`loss_or_consequence` 和 `risk_points`。MVP 已覆盖刷单返利、跑分、代实名、招转培、境外高薪、视频搬运、无人直播、AI 声音/图片、AI 副业课程、虚拟币、打字员兼职、聊天员兼职、博彩代理等方向。
 
 当前案例优先引用以下公开来源：
 

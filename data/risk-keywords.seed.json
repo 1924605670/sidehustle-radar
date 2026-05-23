@@ -498,5 +498,35 @@
     "force_level": "high",
     "explanation": "收益承诺与高薪、日结组合时，存在明显夸大收益风险。",
     "enabled": true
+  },
+  {
+    "id": "combo_ai_course_profit",
+    "keyword": "AI|人工智能+副业|变现|赚钱+课程|陪跑|训练营",
+    "match_type": "combo",
+    "category": "false_promise",
+    "score": 42,
+    "force_level": "medium",
+    "explanation": "AI 副业与课程、陪跑、训练营绑定时，应核实交付、退款和收益承诺。",
+    "enabled": true
+  },
+  {
+    "id": "combo_short_drama_fee",
+    "keyword": "短剧|切片+授权|素材+费用|保证|月入",
+    "match_type": "combo",
+    "category": "copyright",
+    "score": 40,
+    "force_level": "medium",
+    "explanation": "短剧切片项目要重点核实授权真实性、平台规则和是否先收费。",
+    "enabled": true
+  },
+  {
+    "id": "combo_digital_human_unmanned",
+    "keyword": "数字人|无人直播+自动|挂机|24小时|躺赚",
+    "match_type": "combo",
+    "category": "platform_abuse",
+    "score": 48,
+    "force_level": "high",
+    "explanation": "数字人或无人直播若主打挂机自动赚钱，容易触发平台规则和虚假宣传风险。",
+    "enabled": true
   }
 ]

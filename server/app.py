@@ -13,7 +13,7 @@ from db import (
     load_projects,
     load_risk_rules,
 )
-from risk import hash_text, normalize_text, scan_risk
+from risk import hash_text, normalize_text, platform_text, risk_signal_phrases, scan_risk
 
 
 PUBLIC_BASE_PATH = os.environ.get("PUBLIC_BASE_PATH", "").rstrip("/")
@@ -161,6 +161,14 @@ class Handler(BaseHTTPRequestHandler):
 
     def handle_risk_scan(self, body):
         text = str(body.get("text") or "").strip()
+        raw_text = str(body.get("raw_text") or "").strip()
+        project_name = str(body.get("project_name") or "").strip()
+        input_mode = str(body.get("input_mode") or "copy").strip() or "copy"
+        source_platform = str(body.get("source_platform") or "unknown").strip() or "unknown"
+        risk_signals = body.get("risk_signals") or []
+        if not isinstance(risk_signals, list):
+            risk_signals = []
+        signal_phrases = risk_signal_phrases([str(item) for item in risk_signals])
         if len(text) < 10:
             return self.respond(
                 {"error": "text_too_short", "message": "请粘贴更完整的兼职或副业文案，至少 10 个字。"},
@@ -174,13 +182,21 @@ class Handler(BaseHTTPRequestHandler):
             rules = load_risk_rules(conn)
             result = scan_risk(text, rules)
             categories = {hit["category"] for hit in result.get("hit_rules", [])}
-            related_cases = load_cases_for_categories(conn, categories, limit=5)
+            projects = load_projects(conn)
+            matched_project_ids = match_project_ids(f"{project_name}\n{text}", projects)
+            related_cases = load_cases_for_categories(conn, categories, matched_project_ids, limit=5)
         result.update(
             {
-                "source_platform": body.get("source_platform") or "unknown",
+                "source_platform": source_platform,
+                "source_platform_text": platform_text(source_platform),
+                "input_mode": input_mode,
+                "project_name": project_name,
+                "selected_signal_phrases": signal_phrases,
                 "input_hash": hash_text(text),
+                "raw_text_hash": hash_text(raw_text) if raw_text else "",
                 "saved_original_text": False,
                 "risk_categories": sorted(categories),
+                "matched_project_ids": sorted(matched_project_ids),
                 "related_cases": [to_case_list_item(case) for case in related_cases],
                 "evidence_note": "案例来自公开机关、法院或媒体材料，仅用于帮助识别相似风险信号。",
             }
@@ -306,6 +322,16 @@ def to_case_list_item(case):
         "related_project_ids": case.get("related_project_ids", []),
         "related_categories": case.get("related_categories", []),
     }
+
+
+def match_project_ids(text, projects):
+    normalized = normalize_text(text)
+    matched = set()
+    for project in projects:
+        aliases = [project.get("title", ""), *project.get("aliases", [])]
+        if any(normalize_text(alias) and normalize_text(alias) in normalized for alias in aliases):
+            matched.add(project["id"])
+    return matched
 
 
 def main():

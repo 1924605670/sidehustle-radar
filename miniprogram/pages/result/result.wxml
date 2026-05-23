@@ -14,10 +14,25 @@
         <view class="risk-pill {{result.risk_class}}">{{result.risk_level_text}}</view>
         <view class="muted">{{result.possible_pattern}}</view>
       </view>
+      <view class="result-context">
+        <text>{{result.input_mode_text}}</text>
+        <text>{{result.source_platform_text}}</text>
+        <text wx:if="{{result.project_name}}">{{result.project_name}}</text>
+      </view>
+    </view>
+
+    <view class="panel" wx:if="{{result.selected_signal_phrases.length}}">
+      <view class="section-title">你勾选的红线</view>
+      <block wx:for="{{result.selected_signal_phrases}}" wx:key="*this">
+        <view class="evidence-line">
+          <view class="evidence-dot"></view>
+          <view>{{item}}</view>
+        </view>
+      </block>
     </view>
 
     <view class="section-block" wx:if="{{result.related_cases.length}}">
-      <view class="section-title">相似真实案例</view>
+      <view class="section-title">风险证据链</view>
       <block wx:for="{{result.related_cases}}" wx:key="id">
         <view class="case-card">
           <view class="card-title">{{item.title}}</view>
