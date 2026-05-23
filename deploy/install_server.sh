@@ -18,6 +18,18 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 install -d -o "$APP_USER" -g "$APP_USER" "$APP_ROOT" "$(dirname "$DB_PATH")" /var/log/sidehustle-radar
+install -d /etc/sidehustle-radar
+if [ ! -f /etc/sidehustle-radar/llm.env ]; then
+  cat >/etc/sidehustle-radar/llm.env <<'EOF'
+# Optional OpenAI-compatible model config for risk explanation.
+# LLM_ENABLED=1
+# LLM_API_KEY=sk-...
+# LLM_BASE_URL=https://api.openai.com/v1
+# LLM_MODEL=gpt-4o-mini
+# LLM_TIMEOUT_SECONDS=8
+EOF
+  chmod 600 /etc/sidehustle-radar/llm.env
+fi
 
 if [ ! -d "$REPO_DIR/.git" ]; then
   sudo -H -u "$APP_USER" env HTTPS_PROXY="$GIT_PROXY" HTTP_PROXY="$GIT_PROXY" https_proxy="$GIT_PROXY" http_proxy="$GIT_PROXY" git clone --branch "$BRANCH" "$REPO_URL" "$REPO_DIR"

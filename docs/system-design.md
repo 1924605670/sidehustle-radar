@@ -104,6 +104,19 @@ flowchart TD
 - AI 不得降低强规则给出的风险等级。
 - AI 不生成操作教程。
 
+MVP 接入方式：
+
+- 后端通过 OpenAI-compatible Chat Completions 接口调用模型。
+- 环境变量由 `/etc/sidehustle-radar/llm.env` 提供：
+  - `LLM_ENABLED=1`
+  - `LLM_API_KEY=...`
+  - `LLM_BASE_URL=https://api.openai.com/v1`
+  - `LLM_MODEL=gpt-4o-mini`
+  - `LLM_TIMEOUT_SECONDS=8`
+- 默认不开启；未配置 key 或调用失败时，接口仍返回规则检测结果。
+- 前端仅在 `llm_analysis.status = completed` 时展示 AI 语义分析。
+- 用户原文不会入库；开启 AI 后，检测文本会被发送给配置的大模型服务，因此上线前需要在隐私说明中补充第三方模型处理说明。
+
 ### 3.5 适配测试服务
 
 职责：
@@ -305,4 +318,3 @@ MVP 灰度阶段建议：
 - 每日检查搜索无结果词。
 - 每日检查高频误判。
 - 每周更新项目库。
-

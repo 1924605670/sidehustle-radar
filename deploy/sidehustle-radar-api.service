@@ -11,6 +11,7 @@ Environment=HOST=127.0.0.1
 Environment=PORT=18110
 Environment=PUBLIC_BASE_PATH=/sidehustle-radar-api
 Environment=SIDEHUSTLE_DB_PATH=/var/lib/sidehustle-radar/sidehustle-radar.sqlite3
+EnvironmentFile=-/etc/sidehustle-radar/llm.env
 ExecStart=/usr/bin/python3 /opt/sidehustle-radar/repo/server/app.py
 Restart=always
 RestartSec=3
@@ -19,4 +20,3 @@ PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target
-

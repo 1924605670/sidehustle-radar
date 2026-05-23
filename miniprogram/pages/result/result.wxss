@@ -54,6 +54,17 @@
   flex: 0 0 14rpx;
 }
 
+.ai-panel {
+  border-color: #c7e7df;
+}
+
+.ai-summary {
+  color: #101828;
+  font-size: 29rpx;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .rule-card {
   padding: 18rpx 0;
   border-bottom: 1rpx solid #edf1f7;

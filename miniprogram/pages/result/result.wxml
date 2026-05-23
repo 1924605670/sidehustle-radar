@@ -31,6 +31,20 @@
       </block>
     </view>
 
+    <view class="panel ai-panel" wx:if="{{result.has_llm_analysis}}">
+      <view class="section-title">
+        <text>AI 语义分析</text>
+        <text class="muted">规则结果不被 AI 降级</text>
+      </view>
+      <view class="ai-summary">{{result.llm_analysis.summary}}</view>
+      <view class="subtitle">{{result.llm_analysis.risk_mechanism}}</view>
+      <view wx:if="{{result.llm_analysis.extra_risk_points.length}}">
+        <block wx:for="{{result.llm_analysis.extra_risk_points}}" wx:key="*this">
+          <view class="tag danger">{{item}}</view>
+        </block>
+      </view>
+    </view>
+
     <view class="section-block" wx:if="{{result.related_cases.length}}">
       <view class="section-title">风险证据链</view>
       <block wx:for="{{result.related_cases}}" wx:key="id">

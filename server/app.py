@@ -13,6 +13,7 @@ from db import (
     load_projects,
     load_risk_rules,
 )
+from llm import analyze_risk_with_llm, merge_llm_analysis
 from risk import hash_text, normalize_text, platform_text, risk_signal_phrases, scan_risk
 
 
@@ -201,6 +202,8 @@ class Handler(BaseHTTPRequestHandler):
                 "evidence_note": "案例来自公开机关、法院或媒体材料，仅用于帮助识别相似风险信号。",
             }
         )
+        if body.get("use_llm", True) is not False:
+            result = merge_llm_analysis(result, analyze_risk_with_llm(text, result))
         return self.respond(result)
 
     def handle_fit_test(self, body):
