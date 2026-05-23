@@ -51,6 +51,7 @@ def analyze_risk_with_llm(text: str, context: dict) -> dict:
             },
         ],
         "temperature": 0.2,
+        "stream": os.environ.get("LLM_STREAM", "1").lower() in {"1", "true", "yes", "on"},
     }
 
     try:
@@ -115,7 +116,9 @@ def post_chat_completion(base_url: str, api_key: str, payload: dict) -> dict:
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return json.loads(resp.read().decode("utf-8"))
+        if payload.get("stream"):
+            return parse_streaming_chat_response(resp)
+        return parse_chat_response(resp.read().decode("utf-8"))
 
 
 def normalize_chat_url(base_url: str) -> str:
@@ -125,6 +128,65 @@ def normalize_chat_url(base_url: str) -> str:
     if base.endswith("/v1"):
         return f"{base}/chat/completions"
     return f"{base}/v1/chat/completions"
+
+
+def parse_chat_response(raw: str) -> dict:
+    text = str(raw or "").strip()
+    if text.startswith("data:"):
+        return parse_sse_text(text)
+    return json.loads(text)
+
+
+def parse_streaming_chat_response(resp) -> dict:
+    chunks = []
+    while True:
+        line = resp.readline()
+        if not line:
+            break
+        text = line.decode("utf-8", errors="replace").strip()
+        if not text.startswith("data:"):
+            continue
+        value = text[5:].strip()
+        if value == "[DONE]":
+            break
+        chunks.append(value)
+    return build_chat_response_from_sse_chunks(chunks)
+
+
+def parse_sse_text(text: str) -> dict:
+    chunks = []
+    for line in str(text or "").splitlines():
+        line = line.strip()
+        if not line.startswith("data:"):
+            continue
+        value = line[5:].strip()
+        if value == "[DONE]":
+            break
+        chunks.append(value)
+    return build_chat_response_from_sse_chunks(chunks)
+
+
+def build_chat_response_from_sse_chunks(chunks: list[str]) -> dict:
+    content_parts = []
+    final_data = {}
+    for chunk in chunks:
+        if not chunk:
+            continue
+        data = json.loads(chunk)
+        final_data = data
+        for choice in data.get("choices", []):
+            delta = choice.get("delta") or {}
+            message = choice.get("message") or {}
+            content = delta.get("content")
+            if content is None:
+                content = message.get("content")
+            if content:
+                content_parts.append(str(content))
+    content = "".join(content_parts).strip()
+    if not content:
+        raise ValueError("empty_llm_content")
+    final_data["choices"] = [{"message": {"content": content}}]
+    return final_data
 
 
 def parse_json_content(content: str) -> dict:

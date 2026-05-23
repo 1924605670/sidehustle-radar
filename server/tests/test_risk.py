@@ -12,7 +12,7 @@ from server.db import (
     load_risk_rules,
     seed_from_json,
 )
-from server.llm import merge_llm_analysis, normalize_chat_url, parse_json_content
+from server.llm import merge_llm_analysis, normalize_chat_url, parse_chat_response, parse_json_content
 from server.risk import match_combo, scan_risk
 
 
@@ -81,6 +81,19 @@ class RiskTests(unittest.TestCase):
         self.assertTrue(merged["llm_used"])
         self.assertIn("核实合同主体", merged["suggested_actions"])
         self.assertIn("是否承诺收益？", merged["questions_to_verify"])
+
+    def test_llm_helpers_parse_streaming_chat_response(self):
+        raw = "\n".join(
+            [
+                'data: {"choices":[{"delta":{"content":"```json\\n"}}]}',
+                'data: {"choices":[{"delta":{"content":"{\\"summary\\":\\"谨慎\\"}\\n```"}}]}',
+                "data: [DONE]",
+            ]
+        )
+        data = parse_chat_response(raw)
+        content = data["choices"][0]["message"]["content"]
+        parsed = parse_json_content(content)
+        self.assertEqual(parsed["summary"], "谨慎")
 
 
 if __name__ == "__main__":
