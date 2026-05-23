@@ -464,7 +464,7 @@
     "keyword": "下载APP+充值|抢单|提现",
     "match_type": "combo",
     "category": "external_app",
-    "score": 60,
+    "score": 40,
     "force_level": "high",
     "explanation": "下载陌生 App 后要求充值、抢单或提现，风险很高。",
     "enabled": true
@@ -504,9 +504,19 @@
     "keyword": "AI|人工智能+副业|变现|赚钱+课程|陪跑|训练营",
     "match_type": "combo",
     "category": "false_promise",
-    "score": 42,
-    "force_level": "medium",
+    "score": 40,
+    "force_level": "high",
     "explanation": "AI 副业与课程、陪跑、训练营绑定时，应核实交付、退款和收益承诺。",
+    "enabled": true
+  },
+  {
+    "id": "combo_course_guaranteed_orders",
+    "keyword": "课程|陪跑|训练营+包接单|内部渠道|快速回本|7天变现",
+    "match_type": "combo",
+    "category": "false_promise",
+    "score": 25,
+    "force_level": "high",
+    "explanation": "课程或陪跑与包接单、内部渠道、快速回本绑定时，存在明显收益承诺风险。",
     "enabled": true
   },
   {
