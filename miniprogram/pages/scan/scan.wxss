@@ -55,7 +55,7 @@
 
 .segmented-item {
   flex: 1;
-  height: 64rpx;
+  min-height: 74rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +103,7 @@
 .signal-chip {
   display: flex;
   align-items: center;
-  min-height: 58rpx;
+  min-height: 72rpx;
   padding: 0 18rpx;
   border-radius: 12rpx;
   border: 1rpx solid #d7dee8;
@@ -151,15 +151,36 @@
 }
 
 .example-card {
-  padding: 18rpx 0;
-  border-bottom: 1rpx solid #edf1f7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  min-height: 92rpx;
+  padding: 18rpx;
+  margin-top: 14rpx;
+  border: 1rpx solid #e4e9f2;
+  border-radius: 14rpx;
+  background: #ffffff;
   color: #344054;
   font-size: 25rpx;
   line-height: 1.55;
+  box-sizing: border-box;
 }
 
 .example-card:last-child {
-  border-bottom: 0;
+  border-bottom: 1rpx solid #e4e9f2;
+}
+
+.example-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.example-action {
+  flex: 0 0 auto;
+  color: #0f766e;
+  font-size: 24rpx;
+  font-weight: 800;
 }
 
 .compact-case {

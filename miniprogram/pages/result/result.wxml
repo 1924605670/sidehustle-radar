@@ -28,7 +28,7 @@
     </view>
 
     <view class="panel priority-panel">
-      <view class="section-title">先做这三件事</view>
+      <view class="section-title">下一步先做什么</view>
       <block wx:for="{{result.primary_actions}}" wx:key="*this">
         <view class="action-line">
           <view class="action-bullet"></view>
@@ -37,7 +37,11 @@
       </block>
       <view class="button-row tight-row">
         <view class="secondary-button" bindtap="goScan">再测一段</view>
-        <view class="ghost-button" bindtap="goProjects">查项目库</view>
+        <view class="ghost-button" bindtap="copyConclusion">复制结论</view>
+      </view>
+      <view class="button-row tight-row">
+        <button class="secondary-button share-button" open-type="share">发给朋友判断</button>
+        <view class="ghost-button" bindtap="markInaccurate">判断不准</view>
       </view>
     </view>
 
@@ -50,6 +54,25 @@
         </view>
       </block>
     </view>
+
+    <view class="panel" wx:if="{{result.matched_projects.length}}">
+      <view class="section-title">可继续核验的项目</view>
+      <block wx:for="{{result.matched_projects}}" wx:key="id">
+        <view class="project-card" data-slug="{{item.slug}}" bindtap="openProject">
+          <view class="card-head">
+            <view class="card-title">{{item.title}}</view>
+            <view class="risk-pill {{item.risk_class}}">{{item.risk_level_text}}</view>
+          </view>
+          <view class="subtitle">{{item.summary}}</view>
+          <view class="card-action">查看项目档案</view>
+        </view>
+      </block>
+      <view class="button-row tight-row">
+        <view class="ghost-button" bindtap="goProjects">查完整项目库</view>
+      </view>
+    </view>
+
+    <view class="section-title why-title">为什么这么判</view>
 
     <view class="panel" wx:if="{{result.selected_signal_phrases.length}}">
       <view class="section-title">你勾选的红线</view>
@@ -104,26 +127,6 @@
         </view>
       </block>
       <view wx:if="{{!result.hit_rules.length}}" class="empty-state">暂未命中明显高危词，但仍需核实主体、结算和是否先付费。</view>
-    </view>
-
-    <view class="panel">
-      <view class="section-title">建议动作</view>
-      <block wx:for="{{result.suggested_actions}}" wx:key="*this">
-        <view class="list-line">
-          <view class="list-index">{{index + 1}}</view>
-          <view>{{item}}</view>
-        </view>
-      </block>
-    </view>
-
-    <view class="panel">
-      <view class="section-title">核验问题</view>
-      <block wx:for="{{result.questions_to_verify}}" wx:key="*this">
-        <view class="list-line">
-          <view class="list-index">{{index + 1}}</view>
-          <view>{{item}}</view>
-        </view>
-      </block>
     </view>
   </block>
 </view>

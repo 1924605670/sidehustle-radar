@@ -1,5 +1,6 @@
 const { request } = require('../../utils/api');
 const { decorateProject } = require('../../utils/format');
+const { track } = require('../../utils/track');
 
 Page({
   data: {
@@ -72,12 +73,21 @@ Page({
     request(`/projects?${params.join('&')}`)
       .then((res) => {
         const items = (res.items || []).map(decorateProject);
+        const keyword = this.data.keyword.trim();
         this.setData({
           items,
           total: res.total || items.length,
           loadedOnce: true,
           filterSummary: this.buildFilterSummary()
         });
+        track('project_search', {
+          has_keyword: Boolean(keyword),
+          keyword_length: keyword.length,
+          result_count: res.total || items.length,
+          category: this.data.activeCategory,
+          risk_level: this.data.activeLevel,
+          empty: (res.total || items.length) === 0
+        }, 'projects');
       })
       .catch(() => {
         wx.showToast({ title: '查询失败', icon: 'none' });
@@ -136,6 +146,7 @@ Page({
 
   openProject(event) {
     const slug = event.currentTarget.dataset.slug;
+    track('project_detail_click', { slug, from: 'projects' }, 'projects');
     wx.navigateTo({
       url: `/pages/project-detail/project-detail?slug=${encodeURIComponent(slug)}`
     });

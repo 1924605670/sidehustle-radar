@@ -69,7 +69,6 @@
       <view class="meta-row">
         <text>风险分 {{item.risk_score}}</text>
         <text>{{item.case_count}} 个案例</text>
-        <text>{{item.decision_text}}</text>
       </view>
       <view class="decision-banner {{item.risk_level}}" wx:if="{{item.decision_text}}">{{item.decision_text}}</view>
       <view wx:if="{{item.top_case}}" class="case-mini">
@@ -81,6 +80,7 @@
           <view class="tag warning">{{item}}</view>
         </block>
       </view>
+      <view class="card-action">查看风险档案</view>
     </view>
   </block>
 </view>

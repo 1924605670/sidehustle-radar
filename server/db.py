@@ -77,6 +77,18 @@ def init_schema(conn: sqlite3.Connection) -> None:
             result_count integer not null,
             created_at text not null default current_timestamp
         );
+
+        create table if not exists events (
+            id integer primary key autoincrement,
+            event_name text not null,
+            anonymous_id text not null,
+            page text,
+            payload_json text not null,
+            created_at text not null default current_timestamp
+        );
+
+        create index if not exists idx_events_name on events(event_name);
+        create index if not exists idx_events_created_at on events(created_at);
         """
     )
     conn.commit()
@@ -259,3 +271,37 @@ def load_cases_for_categories(
         matched = strong_matches
     matched.sort(key=lambda item: (item[0], item[1]), reverse=True)
     return [case for _relevance, _priority, case in matched[:limit]]
+
+
+def log_search(conn: sqlite3.Connection, keyword: str, result_count: int) -> None:
+    keyword = (keyword or "").strip()[:80]
+    if not keyword:
+        return
+    conn.execute(
+        "insert into search_logs (keyword, result_count) values (?, ?)",
+        (keyword, int(result_count)),
+    )
+    conn.commit()
+
+
+def insert_event(
+    conn: sqlite3.Connection,
+    event_name: str,
+    anonymous_id: str,
+    page: str = "",
+    payload: Optional[dict] = None,
+) -> None:
+    safe_payload = payload if isinstance(payload, dict) else {}
+    conn.execute(
+        """
+        insert into events (event_name, anonymous_id, page, payload_json)
+        values (?, ?, ?, ?)
+        """,
+        (
+            event_name.strip()[:80],
+            anonymous_id.strip()[:80],
+            page.strip()[:80],
+            json.dumps(safe_payload, ensure_ascii=False),
+        ),
+    )
+    conn.commit()

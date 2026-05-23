@@ -138,14 +138,6 @@ page {
 .button-row .secondary-button,
 .button-row .ghost-button {
   flex: 1;
-  margin-right: 16rpx;
-}
-
-.button-row .button:last-child,
-.button-row .primary-button:last-child,
-.button-row .secondary-button:last-child,
-.button-row .ghost-button:last-child {
-  margin-right: 0;
 }
 
 .input {
@@ -156,6 +148,11 @@ page {
   background: #ffffff;
   font-size: 28rpx;
   box-sizing: border-box;
+}
+
+.disabled-button {
+  opacity: 0.58;
+  pointer-events: none;
 }
 
 .textarea {
@@ -256,11 +253,6 @@ page {
   border-radius: 14rpx;
   background: rgba(255, 255, 255, 0.08);
   box-sizing: border-box;
-  margin-right: 14rpx;
-}
-
-.metric-item:last-child {
-  margin-right: 0;
 }
 
 .metric-value {
@@ -300,6 +292,24 @@ page {
   padding: 24rpx;
   margin-bottom: 20rpx;
   box-sizing: border-box;
+}
+
+.project-card:active,
+.case-card:active,
+.action-card:active,
+.example-card:active,
+.option-card:active,
+.filter-chip:active,
+.choice-chip:active,
+.signal-chip:active {
+  opacity: 0.78;
+}
+
+.card-action {
+  margin-top: 16rpx;
+  color: #0f766e;
+  font-size: 24rpx;
+  font-weight: 700;
 }
 
 .card-head {
@@ -405,6 +415,24 @@ page {
   background: #f8fbff;
   border-color: #d8e5f5;
   box-shadow: none;
+}
+
+.source-copy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 58rpx;
+  margin-top: 18rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: #e6f4f1;
+  color: #0f766e;
+  font-size: 24rpx;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.source-copy:active {
+  opacity: 0.78;
 }
 
 .divider {

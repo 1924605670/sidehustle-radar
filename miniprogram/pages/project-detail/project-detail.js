@@ -1,5 +1,6 @@
 const { request } = require('../../utils/api');
 const { decorateCase, decorateProject, rememberProject } = require('../../utils/format');
+const { track } = require('../../utils/track');
 
 function decisionTone(level) {
   if (level === 'extreme') {
@@ -56,6 +57,11 @@ Page({
           thresholdEntries: entriesFromThreshold(project.threshold),
           loading: false
         });
+        track('project_detail_view', {
+          slug,
+          risk_level: decorated.risk_level,
+          case_count: decorated.cases.length
+        }, 'project-detail');
       })
       .catch(() => {
         this.setData({ loading: false });
@@ -76,6 +82,7 @@ Page({
         wx.showToast({ title: '已复制核验清单', icon: 'none' });
       }
     });
+    track('copy_checklist', { project_id: project.id, slug: project.slug }, 'project-detail');
   },
 
   copySource(event) {
@@ -86,5 +93,6 @@ Page({
         wx.showToast({ title: '已复制来源链接', icon: 'none' });
       }
     });
+    track('copy_source', { from: 'project_detail' }, 'project-detail');
   }
 });

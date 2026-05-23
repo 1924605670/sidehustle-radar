@@ -4,6 +4,7 @@
       <view class="eyebrow">副业判断工具</view>
       <view class="hero-title">先判断，再投入</view>
       <view class="hero-subtitle">这个产品不推荐“赚快钱项目”，而是帮你在看到副业广告、课程话术、项目介绍时，先做风险判断。</view>
+      <view class="hero-proof">公开来源可追溯，优先收录 2024-2026 年风险案例。</view>
       <view class="trust-row">
         <block wx:for="{{trustNotes}}" wx:key="*this">
           <view class="trust-chip">{{item}}</view>

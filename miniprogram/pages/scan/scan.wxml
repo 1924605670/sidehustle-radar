@@ -73,14 +73,17 @@
 
     <view class="button-row">
       <view class="ghost-button" bindtap="clearText">重置</view>
-      <view class="primary-button" bindtap="scan">立即检测</view>
+      <view class="primary-button {{submitting ? 'disabled-button' : ''}}" bindtap="scan">{{submitting ? '检测中' : '立即检测'}}</view>
     </view>
   </view>
 
   <view class="panel">
     <view class="section-title">示例文案</view>
     <block wx:for="{{examples}}" wx:key="*this">
-      <view class="example-card" data-text="{{item}}" bindtap="useExample">{{item}}</view>
+      <view class="example-card" data-text="{{item}}" bindtap="useExample">
+        <view class="example-text">{{item}}</view>
+        <view class="example-action">填入</view>
+      </view>
     </block>
   </view>
 

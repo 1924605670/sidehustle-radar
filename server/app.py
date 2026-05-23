@@ -6,7 +6,9 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from db import (
     connect,
+    insert_event,
     init_schema,
+    log_search,
     load_cases,
     load_cases_for_categories,
     load_cases_for_project,
@@ -70,6 +72,8 @@ class Handler(BaseHTTPRequestHandler):
             return self.handle_risk_scan(body)
         if path == "/fit-test":
             return self.handle_fit_test(body)
+        if path == "/events":
+            return self.handle_event(body)
         return self.respond({"error": "not_found"}, 404)
 
     def route(self):
@@ -121,6 +125,10 @@ class Handler(BaseHTTPRequestHandler):
             to_project_list_item(project, cases)
             for project in filtered[start : start + page_size]
         ]
+        if normalized:
+            with connect() as conn:
+                init_schema(conn)
+                log_search(conn, keyword, len(filtered))
         self.respond({"items": items, "total": len(filtered), "page": page, "page_size": page_size})
 
     def handle_project_detail(self, path):
@@ -186,7 +194,15 @@ class Handler(BaseHTTPRequestHandler):
             categories = {hit["category"] for hit in result.get("hit_rules", [])}
             projects = load_projects(conn)
             matched_project_ids = match_project_ids(f"{project_name}\n{text}", projects)
+            project_by_id = {project["id"]: project for project in projects}
             related_cases = load_cases_for_categories(conn, categories, matched_project_ids, limit=5)
+            if not matched_project_ids:
+                matched_project_ids = {
+                    project_id
+                    for case in related_cases
+                    for project_id in case.get("related_project_ids", [])
+                    if project_id in project_by_id
+                }
         result.update(
             {
                 "source_platform": source_platform,
@@ -199,6 +215,11 @@ class Handler(BaseHTTPRequestHandler):
                 "saved_original_text": False,
                 "risk_categories": sorted(categories),
                 "matched_project_ids": sorted(matched_project_ids),
+                "matched_projects": [
+                    to_project_list_item(project_by_id[project_id])
+                    for project_id in sorted(matched_project_ids)
+                    if project_id in project_by_id
+                ][:3],
                 "related_cases": [to_case_list_item(case) for case in related_cases],
                 "evidence_note": "案例来自公开机关、法院或媒体材料，仅用于帮助识别相似风险信号。",
             }
@@ -255,6 +276,20 @@ class Handler(BaseHTTPRequestHandler):
                 "disclaimer": "推荐结果仅用于降低试错成本，不代表收益承诺。",
             }
         )
+
+    def handle_event(self, body):
+        event_name = str(body.get("event_name") or "").strip()
+        anonymous_id = str(body.get("anonymous_id") or "").strip()
+        page = str(body.get("page") or "").strip()
+        payload = body.get("payload") or {}
+        if not event_name or not anonymous_id:
+            return self.respond({"error": "bad_event"}, 400)
+        if not isinstance(payload, dict):
+            payload = {}
+        with connect() as conn:
+            init_schema(conn)
+            insert_event(conn, event_name, anonymous_id, page, payload)
+        return self.respond({"ok": True})
 
     def read_json_body(self):
         length = int(self.headers.get("content-length") or "0")

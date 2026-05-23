@@ -5,11 +5,13 @@ from pathlib import Path
 
 from server.db import (
     connect,
+    insert_event,
     load_cases,
     load_cases_for_categories,
     load_cases_for_project,
     load_projects,
     load_risk_rules,
+    log_search,
     seed_from_json,
 )
 from server.llm import merge_llm_analysis, normalize_chat_url, parse_chat_response, parse_json_content
@@ -51,6 +53,19 @@ class RiskTests(unittest.TestCase):
 
         self.assertGreater(len(cases), 0)
         self.assertIn("risk_points", cases[0])
+
+    def test_events_and_search_logs_are_persisted(self):
+        with tempfile.NamedTemporaryFile(suffix=".sqlite3") as tmp:
+            with connect(Path(tmp.name)) as conn:
+                seed_from_json(conn, ROOT_DIR / "data")
+                log_search(conn, "刷单", 3)
+                insert_event(conn, "project_search", "anon-test", "projects", {"result_count": 3})
+                search_count = conn.execute("select count(*) from search_logs").fetchone()[0]
+                event = conn.execute("select event_name, anonymous_id from events").fetchone()
+
+        self.assertEqual(search_count, 1)
+        self.assertEqual(event["event_name"], "project_search")
+        self.assertEqual(event["anonymous_id"], "anon-test")
 
     def test_normal_editing_service_copy_is_not_extreme(self):
         rules = json.loads((ROOT_DIR / "data" / "risk-keywords.seed.json").read_text(encoding="utf-8"))

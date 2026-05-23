@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "检测"
+  "navigationBarTitleText": "检测",
+  "enablePullDownRefresh": true
 }

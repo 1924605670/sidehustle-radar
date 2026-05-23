@@ -89,6 +89,10 @@
   border-color: #c7e7df;
 }
 
+.why-title {
+  margin-top: 26rpx;
+}
+
 .ai-summary {
   color: #101828;
   font-size: 29rpx;
@@ -111,9 +115,13 @@
   font-weight: 700;
 }
 
-.source-copy {
-  margin-top: 18rpx;
-  color: #0f766e;
-  font-size: 24rpx;
-  font-weight: 700;
+.share-button {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  border: 0;
+}
+
+.share-button::after {
+  border: 0;
 }

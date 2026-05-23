@@ -1,5 +1,6 @@
 const { request } = require('../../utils/api');
 const { decorateCase } = require('../../utils/format');
+const { track } = require('../../utils/track');
 
 const MODE_TIPS = {
   copy: '适合把广告、招聘话术、私聊内容直接贴进来。',
@@ -17,6 +18,7 @@ Page({
     formError: '',
     selectedPlatform: 'unknown',
     selectedSignals: [],
+    submitting: false,
     loadingCases: false,
     latestCases: [],
     modes: [
@@ -100,11 +102,21 @@ Page({
   },
 
   scan() {
+    if (this.data.submitting) {
+      return;
+    }
     const payload = this.buildPayload();
     if (!payload) {
       return;
     }
 
+    this.setData({ submitting: true });
+    track('risk_scan_submit', {
+      mode: payload.input_mode,
+      platform: payload.source_platform,
+      text_length: payload.raw_text.length,
+      signal_count: payload.risk_signals.length
+    }, 'scan');
     wx.showLoading({ title: '检测中' });
     request('/risk-scan', {
       method: 'POST',
@@ -114,12 +126,28 @@ Page({
         const count = wx.getStorageSync('scan_count') || 0;
         wx.setStorageSync('scan_count', count + 1);
         wx.setStorageSync('last_scan_result', res);
+        track('risk_scan_success', {
+          mode: payload.input_mode,
+          platform: payload.source_platform,
+          risk_level: res.risk_level,
+          risk_score: res.risk_score,
+          hit_rule_count: (res.hit_rules || []).length,
+          related_case_count: (res.related_cases || []).length,
+          matched_project_count: (res.matched_projects || []).length
+        }, 'scan');
         wx.navigateTo({ url: '/pages/result/result' });
       })
       .catch((err) => {
+        track('risk_scan_fail', {
+          mode: payload.input_mode,
+          message: err.message || err.errMsg || 'unknown'
+        }, 'scan');
         wx.showToast({ title: err.message || '检测失败', icon: 'none' });
       })
-      .finally(() => wx.hideLoading());
+      .finally(() => {
+        this.setData({ submitting: false });
+        wx.hideLoading();
+      });
   },
 
   buildPayload() {
@@ -173,6 +201,7 @@ Page({
       text,
       activeMode: 'copy'
     });
+    track('scan_example_use', { text_length: text.length }, 'scan');
   },
 
   clearText() {
@@ -204,6 +233,7 @@ Page({
         wx.showToast({ title: '已复制来源链接', icon: 'none' });
       }
     });
+    track('copy_source', { from: 'scan_cases' }, 'scan');
   }
 });
 

@@ -12,6 +12,11 @@
       </view>
       <view class="subtitle">{{project.summary}}</view>
       <view class="detail-decision {{project.decision_tone}}">{{project.decision_text}}</view>
+      <view class="evidence-strip">
+        <text>公开来源可追溯</text>
+        <text>近两年优先</text>
+        <text>案例辅助核验</text>
+      </view>
       <view class="metric-grid">
         <view class="metric-item">
           <view class="metric-value">{{project.risk_score}}</view>
