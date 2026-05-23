@@ -11,6 +11,7 @@
         <view class="risk-pill {{project.risk_class}}">{{project.risk_level_text}}</view>
       </view>
       <view class="subtitle">{{project.summary}}</view>
+      <view class="detail-decision {{project.decision_tone}}">{{project.decision_text}}</view>
       <view class="metric-grid">
         <view class="metric-item">
           <view class="metric-value">{{project.risk_score}}</view>
@@ -25,6 +26,46 @@
           <view class="metric-label">预警词</view>
         </view>
       </view>
+      <view class="button-row tight-row">
+        <view class="secondary-button" bindtap="copyChecklist">复制核验清单</view>
+        <view class="primary-button" bindtap="goScan">测相关文案</view>
+      </view>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">真实门槛</view>
+      <block wx:for="{{thresholdEntries}}" wx:key="label">
+        <view class="threshold-row">
+          <view class="threshold-label">{{item.label}}</view>
+          <view class="threshold-value">{{item.value}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">赚钱逻辑</view>
+      <view class="subtitle">{{project.money_logic}}</view>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">常见坑点</view>
+      <block wx:for="{{project.common_traps}}" wx:key="*this">
+        <view class="list-line">
+          <view class="list-index">{{index + 1}}</view>
+          <view>{{item}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="panel">
+      <view class="section-title">先核验这几项</view>
+      <block wx:for="{{project.primary_steps}}" wx:key="*this">
+        <view class="list-line">
+          <view class="list-index">{{index + 1}}</view>
+          <view>{{item}}</view>
+        </view>
+      </block>
+      <view class="field-tip">完整清单可复制后逐项询问对方，回答含糊时先暂停。</view>
     </view>
 
     <view class="section-block" wx:if="{{project.cases.length}}">
@@ -47,45 +88,6 @@
           <view class="source-copy" data-url="{{item.source_url}}" bindtap="copySource">复制公开来源链接</view>
         </view>
       </block>
-    </view>
-
-    <view class="panel">
-      <view class="section-title">赚钱逻辑</view>
-      <view class="subtitle">{{project.money_logic}}</view>
-    </view>
-
-    <view class="panel">
-      <view class="section-title">真实门槛</view>
-      <block wx:for="{{thresholdEntries}}" wx:key="label">
-        <view class="threshold-row">
-          <view class="threshold-label">{{item.label}}</view>
-          <view class="threshold-value">{{item.value}}</view>
-        </view>
-      </block>
-    </view>
-
-    <view class="panel">
-      <view class="section-title">常见坑点</view>
-      <block wx:for="{{project.common_traps}}" wx:key="*this">
-        <view class="list-line">
-          <view class="list-index">{{index + 1}}</view>
-          <view>{{item}}</view>
-        </view>
-      </block>
-    </view>
-
-    <view class="panel">
-      <view class="section-title">核验步骤</view>
-      <block wx:for="{{project.verification_steps}}" wx:key="*this">
-        <view class="list-line">
-          <view class="list-index">{{index + 1}}</view>
-          <view>{{item}}</view>
-        </view>
-      </block>
-      <view class="button-row">
-        <view class="secondary-button" bindtap="copyChecklist">复制清单</view>
-        <view class="primary-button" bindtap="goScan">测文案</view>
-      </view>
     </view>
 
     <view class="panel">

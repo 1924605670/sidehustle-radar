@@ -9,12 +9,17 @@
     <view class="section-title">搜索项目</view>
     <input class="input" placeholder="输入副业、兼职或课程方向" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="search" />
     <view class="button-row">
-      <view class="ghost-button" bindtap="clearKeyword">清空</view>
+      <view class="ghost-button" bindtap="clearAllFilters">清空全部</view>
       <view class="primary-button" bindtap="search">搜索</view>
     </view>
     <view class="button-row slim-row">
       <view class="secondary-button" bindtap="goScan">测一段文案</view>
       <view class="ghost-button" bindtap="goFit">起步建议</view>
+    </view>
+    <view class="filter-summary" wx:if="{{filterSummary.length}}">
+      <block wx:for="{{filterSummary}}" wx:key="*this">
+        <view class="summary-chip">{{item}}</view>
+      </block>
     </view>
   </view>
 
@@ -39,7 +44,9 @@
   </view>
 
   <block wx:if="{{loading}}">
-    <view class="panel">正在查询...</view>
+    <view class="panel soft-panel">
+      <view class="empty-state">正在查询项目风险档案...</view>
+    </view>
   </block>
 
   <block wx:elif="{{items.length === 0}}">
@@ -64,6 +71,7 @@
         <text>{{item.case_count}} 个案例</text>
         <text>{{item.decision_text}}</text>
       </view>
+      <view class="decision-banner {{item.risk_level}}" wx:if="{{item.decision_text}}">{{item.decision_text}}</view>
       <view wx:if="{{item.top_case}}" class="case-mini">
         <view class="muted">最近关联案例</view>
         <view class="case-mini-title">{{item.top_case.title}}</view>

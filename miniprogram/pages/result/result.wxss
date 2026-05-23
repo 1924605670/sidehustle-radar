@@ -1,3 +1,10 @@
+.result-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
 .result-score {
   color: #ffffff;
   font-size: 86rpx;
@@ -5,15 +12,35 @@
   line-height: 1;
 }
 
-.result-meta {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-  margin-top: 18rpx;
+.decision-card {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  border-radius: 14rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.13);
 }
 
-.result-meta .muted {
-  flex: 1;
+.decision-card.high,
+.decision-card.extreme {
+  background: rgba(255, 241, 240, 0.12);
+}
+
+.decision-card.low {
+  background: rgba(236, 253, 243, 0.12);
+}
+
+.decision-title {
+  color: #ffffff;
+  font-size: 31rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.decision-copy {
+  margin-top: 10rpx;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 24rpx;
+  line-height: 1.5;
 }
 
 .result-context {
@@ -55,6 +82,10 @@
 }
 
 .ai-panel {
+  border-color: #c7e7df;
+}
+
+.priority-panel {
   border-color: #c7e7df;
 }
 

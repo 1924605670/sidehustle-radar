@@ -19,8 +19,7 @@ Page({
     quickActions: [
       { key: 'projects', title: '查项目', desc: '先看风险档案' },
       { key: 'scan', title: '测文案', desc: '识别危险话术' },
-      { key: 'fit', title: '起步建议', desc: '先筛掉不适合的方向' },
-      { key: 'cases', title: '看案例', desc: '只看近期公开事件' }
+      { key: 'fit', title: '做适配', desc: '先筛掉不适合的方向' }
     ],
     topProjects: [],
     starterProjects: [],
@@ -102,9 +101,6 @@ Page({
     }
     if (action === 'fit') {
       return this.goFit();
-    }
-    if (action === 'cases') {
-      return this.goCases();
     }
     return this.openProjects('');
   },

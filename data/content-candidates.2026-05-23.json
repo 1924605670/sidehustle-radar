@@ -7,8 +7,17 @@
     "source_url": "https://news.cctv.cn/2025/12/21/ARTImAZDqcWdrs8bbHmspx9L251221.shtml",
     "found_at": "2026-05-23",
     "event_date": "2025-12",
-    "keywords": ["AI副业", "AI变现", "高价课程", "陪跑"],
-    "risk_categories": ["false_promise", "payment_first", "pressure_sale"],
+    "keywords": [
+      "AI副业",
+      "AI变现",
+      "高价课程",
+      "陪跑"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "payment_first",
+      "pressure_sale"
+    ],
     "summary": "AI 工具热潮下，高价课程常用快速变现、内部渠道、包接单等话术吸引付费。",
     "review_status": "imported"
   },
@@ -20,8 +29,16 @@
     "source_url": "https://www.chinanews.com.cn/sh/2025/04-29/10407899.shtml",
     "found_at": "2026-05-23",
     "event_date": "2025-04",
-    "keywords": ["短剧切片", "直播切片", "授权剪辑", "短视频搬运"],
-    "risk_categories": ["copyright", "platform_abuse"],
+    "keywords": [
+      "短剧切片",
+      "直播切片",
+      "授权剪辑",
+      "短视频搬运"
+    ],
+    "risk_categories": [
+      "copyright",
+      "platform_abuse"
+    ],
     "summary": "近期短视频版权判例可作为切片授权、搬运变现项目的风险依据。",
     "review_status": "imported"
   },
@@ -33,8 +50,17 @@
     "source_url": "https://news.cctv.cn/2025/03/27/ARTIhm8HIchA4kb70EA89JFb250327.shtml",
     "found_at": "2026-05-23",
     "event_date": "2025-03",
-    "keywords": ["数字人直播", "无人直播", "录播", "挂机带货"],
-    "risk_categories": ["platform_abuse", "false_promise", "copyright"],
+    "keywords": [
+      "数字人直播",
+      "无人直播",
+      "录播",
+      "挂机带货"
+    ],
+    "risk_categories": [
+      "platform_abuse",
+      "false_promise",
+      "copyright"
+    ],
     "summary": "平台大规模处置无人直播、数字人违规录播，可支撑工具类副业风险说明。",
     "review_status": "imported"
   },
@@ -46,8 +72,16 @@
     "source_url": "",
     "found_at": "2026-05-23",
     "event_date": "2026-05",
-    "keywords": ["探店达人", "本地生活达人", "团购推广", "门店种草"],
-    "risk_categories": ["false_promise", "platform_abuse"],
+    "keywords": [
+      "探店达人",
+      "本地生活达人",
+      "团购推广",
+      "门店种草"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "platform_abuse"
+    ],
     "summary": "用户搜索概率高，先入库为中风险项目，后续补平台规则、虚假宣传或刷好评案例。",
     "review_status": "needs_source"
   },
@@ -59,8 +93,17 @@
     "source_url": "",
     "found_at": "2026-05-23",
     "event_date": "2026-05",
-    "keywords": ["游戏搬砖", "手游搬砖", "游戏代练", "脚本打金"],
-    "risk_categories": ["payment_first", "platform_abuse", "sensitive_info"],
+    "keywords": [
+      "游戏搬砖",
+      "手游搬砖",
+      "游戏代练",
+      "脚本打金"
+    ],
+    "risk_categories": [
+      "payment_first",
+      "platform_abuse",
+      "sensitive_info"
+    ],
     "summary": "真实需求存在，但常见押金派单、脚本封号、账号交易纠纷，需要继续补近两年案例。",
     "review_status": "needs_source"
   },
@@ -72,9 +115,565 @@
     "source_url": "",
     "found_at": "2026-05-23",
     "event_date": "2026-05",
-    "keywords": ["上门喂猫", "宠物喂养", "宠物寄养", "遛狗接单"],
-    "risk_categories": ["local_service", "privacy"],
+    "keywords": [
+      "上门喂猫",
+      "宠物喂养",
+      "宠物寄养",
+      "遛狗接单"
+    ],
+    "risk_categories": [
+      "local_service",
+      "privacy"
+    ],
     "summary": "低风险可验证本地服务方向，后续补钥匙交接、责任边界、平台外交易风险案例。",
     "review_status": "needs_source"
+  },
+  {
+    "candidate_id": "cand_20260523_007",
+    "type": "case",
+    "title": "DeepSeek/AI 变现卖课承诺“接单变现”",
+    "source_name": "新华网",
+    "source_url": "https://www.news.cn/fortune/20250214/e5b9e694e47741888e635f096fa3266b/c.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-02-14",
+    "keywords": [
+      "DeepSeek",
+      "AI变现",
+      "接单变现",
+      "卖课",
+      "学员截图"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "pressure_sale",
+      "payment_first"
+    ],
+    "related_project_hint": "AI 副业课程/陪跑",
+    "summary": "新华网点名多类 DeepSeek/AI 课程以导师光环、收益承诺和学员截图刺激成交，客服对导师资质查询回避。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_008",
+    "type": "case",
+    "title": "假冒快手本地生活官方服务商招商加盟",
+    "source_name": "解放日报/上海警方",
+    "source_url": "https://www.jfdaily.com/wx/detail.do?id=859332",
+    "found_at": "2026-05-23",
+    "event_date": "2025-01-26",
+    "keywords": [
+      "快手本地生活",
+      "代运营",
+      "官方服务商",
+      "代理商",
+      "加盟费"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "impersonation",
+      "payment_first"
+    ],
+    "related_project_hint": "探店达人/本地生活接单",
+    "summary": "警方披露团伙假冒“快手”官方合作方，以免费入驻、成为代理商等话术招募商户和区域代理，累计骗取加盟费超 5000 万元。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_009",
+    "type": "case",
+    "title": "无货源跨境电商被包装成低门槛开店副业",
+    "source_name": "法治日报",
+    "source_url": "https://www.legaldaily.com.cn/fxjy/content/2025-04/07/content_9172028.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-04-07",
+    "keywords": [
+      "无货源",
+      "跨境电商",
+      "低门槛开店",
+      "代运营",
+      "培训课程"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "pressure_sale",
+      "platform_abuse"
+    ],
+    "related_project_hint": "无货源电商",
+    "summary": "法治日报报道无货源跨境电商被包装成新赛道和信息差项目，衍生出高价课程、代运营、虚假教学和后续维权难等问题。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_010",
+    "type": "case",
+    "title": "微短剧推广训练营以高价课程和虚假授权诱导付费",
+    "source_name": "新华网",
+    "source_url": "https://www.hn.news.cn/20250403/89564090c1f24f0e9054c992478247a2/c.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-04-03",
+    "keywords": [
+      "微短剧推广",
+      "最强副业",
+      "训练营",
+      "虚假授权",
+      "流量投放"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "pressure_sale",
+      "copyright"
+    ],
+    "related_project_hint": "短剧推广/短剧切片授权",
+    "summary": "新华网指出微短剧推广被包装成“最强副业”，常见套路包括高价训练营、虚假授权、一键剪辑工具和诱导继续买流量。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_011",
+    "type": "case",
+    "title": "“月入过万+固定路线”货运兼职实为套路运",
+    "source_name": "检察日报",
+    "source_url": "https://newspaper.jcrb.com/2025/20250621/20250621_003/20250621_003_2.htm",
+    "found_at": "2026-05-23",
+    "event_date": "2025-06-21",
+    "keywords": [
+      "月入过万",
+      "固定路线",
+      "货运司机",
+      "购车贷款",
+      "套路运"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "payment_first",
+      "debt_trap"
+    ],
+    "related_project_hint": "本地服务/司机加盟类副业",
+    "summary": "检察日报分析“套路运”典型案件：以高薪招聘司机为饵，诱导求职者高价购车、缴纳管理费或保证金，实际无法兑现货源和收益承诺。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_012",
+    "type": "case",
+    "title": "超范围开展互联网营销师培训并违规颁证",
+    "source_name": "上海市人民政府",
+    "source_url": "https://www.shanghai.gov.cn/nw4411/20250126/e0af7021f4b6463cbdf3c2f55d446955.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-01-26",
+    "keywords": [
+      "互联网营销师",
+      "全媒体运营",
+      "培训",
+      "违规颁证",
+      "超范围"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "pressure_sale",
+      "false_certification"
+    ],
+    "related_project_hint": "课程陪跑/自媒体运营培训",
+    "summary": "上海通报职业技能培训专项整治时点名部分机构超范围开展互联网营销师培训并违规颁发证书，可直接支撑“陪跑培训/证书变现”风险。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_013",
+    "type": "rule",
+    "title": "AI 卖课收益承诺组合词",
+    "source_name": "新华网",
+    "source_url": "https://www.news.cn/fortune/20250214/e5b9e694e47741888e635f096fa3266b/c.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-02-14",
+    "keywords": [
+      "接单变现",
+      "保证接单",
+      "学员截图",
+      "导师光环",
+      "无脑赚钱"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "pressure_sale"
+    ],
+    "related_project_hint": "AI 副业课程/陪跑",
+    "summary": "建议新增规则词组合：接单变现、保证接单、往期学员截图、0基础也能赚、导师带你拿结果。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_014",
+    "type": "rule",
+    "title": "本地生活代运营假官方招商组合词",
+    "source_name": "解放日报/上海警方",
+    "source_url": "https://www.jfdaily.com/wx/detail.do?id=859332",
+    "found_at": "2026-05-23",
+    "event_date": "2025-01-26",
+    "keywords": [
+      "官方服务商",
+      "免费入驻",
+      "区域代理",
+      "招商会",
+      "加盟费"
+    ],
+    "risk_categories": [
+      "impersonation",
+      "payment_first",
+      "false_promise"
+    ],
+    "related_project_hint": "探店达人/本地生活接单",
+    "summary": "建议新增规则词组合：官方合作中心、免费开通团购、区域独家代理、加盟即返款、平台招商会。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_015",
+    "type": "rule",
+    "title": "微短剧推广训练营话术词",
+    "source_name": "新华网",
+    "source_url": "https://www.hn.news.cn/20250403/89564090c1f24f0e9054c992478247a2/c.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-04-03",
+    "keywords": [
+      "零粉丝",
+      "无基础",
+      "一键剪辑",
+      "导师一对一",
+      "训练营"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "pressure_sale",
+      "copyright"
+    ],
+    "related_project_hint": "短剧推广/短剧切片授权",
+    "summary": "建议新增规则词组合：零粉丝也能变现、无基础速成、一键剪辑爆单、导师一对一、训练营升级。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_016",
+    "type": "rule",
+    "title": "AI 技术滥用与引流售课词",
+    "source_name": "中央网信办",
+    "source_url": "https://www.cac.gov.cn/2025-04/30/c_1747719097461951.htm",
+    "found_at": "2026-05-23",
+    "event_date": "2025-04-30",
+    "keywords": [
+      "AI起号",
+      "AI引流",
+      "AI换脸",
+      "AI拟声",
+      "AI教程"
+    ],
+    "risk_categories": [
+      "platform_abuse",
+      "copyright",
+      "sensitive_info"
+    ],
+    "related_project_hint": "AI 副业/数字人直播/自媒体矩阵",
+    "summary": "网信专项明确整治 AI 换脸拟声侵权、缺失标识、违规应用和营销引流，可把 AI 起号、AI 引流、卖违规 AI 教程列为高权重词。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_017",
+    "type": "rule",
+    "title": "直播电商黑名单与服务机构合规词",
+    "source_name": "市场监管总局",
+    "source_url": "https://www.samr.gov.cn/zw/zfxxgk/fdzdgknr/fgs/art/2026/art_ce66ea61fcec4583b5dbd677f470088b.html",
+    "found_at": "2026-05-23",
+    "event_date": "2026-02-01",
+    "keywords": [
+      "直播营销人员服务机构",
+      "黑名单",
+      "直播电商平台",
+      "平台规则",
+      "直播间运营者"
+    ],
+    "risk_categories": [
+      "platform_abuse",
+      "false_promise"
+    ],
+    "related_project_hint": "数字人直播/本地生活代运营/直播带货陪跑",
+    "summary": "直播电商监督管理办法已于 2026-02-01 施行，建议把服务机构、直播间运营者、黑名单、平台规则等合规模型信号前置到直播类副业。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_018",
+    "type": "rule",
+    "title": "微短剧备案与小程序分发监管词",
+    "source_name": "国家广播电视总局",
+    "source_url": "https://www.nrta.gov.cn/art/2025/2/5/art_113_70148.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-02-05",
+    "keywords": [
+      "微短剧备案",
+      "小程序短剧",
+      "内容审核",
+      "平台承诺书",
+      "无序传播"
+    ],
+    "risk_categories": [
+      "platform_abuse",
+      "copyright"
+    ],
+    "related_project_hint": "短剧推广/短剧切片授权",
+    "summary": "广电总局继续强调微短剧备案、内容审核和对小程序类短剧无序传播的治理，适合作为短剧分发和授权核验规则依据。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_019",
+    "type": "project",
+    "title": "虚拟币带单/炒币套利",
+    "source_name": "深圳市防范和打击非法金融活动专责小组办公室",
+    "source_url": "https://jr.sz.gov.cn/gkmlpt/content/11/11325/post_11325233.html#1957",
+    "found_at": "2026-05-23",
+    "event_date": "2024-05-22",
+    "keywords": [
+      "虚拟货币",
+      "炒币",
+      "带单",
+      "境外数字期权",
+      "保本高收益"
+    ],
+    "risk_categories": [
+      "crypto",
+      "false_promise",
+      "payment_first",
+      "illegal_fund_flow"
+    ],
+    "related_project_hint": "加密副业/虚拟币套利",
+    "summary": "官方点名以虚拟货币、境外数字期权为幌子的非法集资活动，适合作为币圈副业、带单套利类项目的高危依据。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_020",
+    "type": "project",
+    "title": "无货源开网店/代运营套餐",
+    "source_name": "张家港市公安局",
+    "source_url": "https://www.zjg.gov.cn/zjgszwz/yjxx/202503/861d4ac7f1d8490eb3d1d4abf46a4739.shtml",
+    "found_at": "2026-05-23",
+    "event_date": "2025-03",
+    "keywords": [
+      "无货源开店",
+      "开网店",
+      "代运营",
+      "垫付货款",
+      "资金验证"
+    ],
+    "risk_categories": [
+      "payment_first",
+      "false_promise",
+      "withdrawal_block"
+    ],
+    "related_project_hint": "无货源电商",
+    "summary": "警方明确提示“无货源开店”常以代运营、垫付货款、验明资金等名义层层收费，符合副业避坑高频搜索场景。",
+    "suggest_import": true,
+    "review_status": "pending"
+  },
+  {
+    "candidate_id": "cand_20260523_021",
+    "type": "project",
+    "title": "直播卖课/陪跑接单",
+    "source_name": "中国新闻网",
+    "source_url": "https://www.chinanews.com.cn/sh/2024/03-19/10183410.shtml",
+    "found_at": "2026-05-23",
+    "event_date": "2024-03-19",
+    "keywords": [
+      "直播授课",
+      "陪跑",
+      "粉丝引流",
+      "0元学",
+      "接单变现"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "payment_first",
+      "pressure_sale"
+    ],
+    "related_project_hint": "课程陪跑/自媒体变现",
+    "summary": "上海警方披露卖课诈骗链条，前端用直播授课、0元学和精准引流包装，后端靠升级课程和陪跑收费变现。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_022",
+    "type": "project",
+    "title": "探店达人/本地生活种草",
+    "source_name": "常州市市场监督管理局",
+    "source_url": "https://scjgj.changzhou.gov.cn/html/gsj/2025/BCOAJQIO_0520/24300.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-05-20",
+    "keywords": [
+      "探店达人",
+      "种草笔记",
+      "广告标识",
+      "虚假宣传",
+      "探店视频"
+    ],
+    "risk_categories": [
+      "platform_abuse",
+      "false_promise"
+    ],
+    "related_project_hint": "本地服务/探店接单",
+    "summary": "监管部门约谈平台和 MCN，要求探店测评内容显著标明广告并禁止虚假宣传，可作为本地生活达人接单的合规边界来源。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_023",
+    "type": "rule",
+    "title": "虚拟币副业高危词",
+    "source_name": "深圳市防范和打击非法金融活动专责小组办公室 / 最高人民检察院",
+    "source_url": "https://jr.sz.gov.cn/gkmlpt/content/11/11325/post_11325233.html#1957",
+    "found_at": "2026-05-23",
+    "event_date": "2024-05-22",
+    "keywords": [
+      "炒币",
+      "币圈带单",
+      "数字期权",
+      "稳定套利",
+      "保本高收益"
+    ],
+    "risk_categories": [
+      "crypto",
+      "false_promise",
+      "illegal_fund_flow"
+    ],
+    "related_project_hint": "加密副业/虚拟币套利",
+    "summary": "建议新增规则词组合：炒币带单、保本高收益、境外数字期权、稳定套利、入金开户。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_024",
+    "type": "rule",
+    "title": "无货源开店收费话术词",
+    "source_name": "张家港市公安局",
+    "source_url": "https://www.zjg.gov.cn/zjgszwz/yjxx/202503/861d4ac7f1d8490eb3d1d4abf46a4739.shtml",
+    "found_at": "2026-05-23",
+    "event_date": "2025-03",
+    "keywords": [
+      "代运营",
+      "垫付货款",
+      "验明资金",
+      "开店套餐",
+      "一年赚80万"
+    ],
+    "risk_categories": [
+      "payment_first",
+      "false_promise",
+      "withdrawal_block"
+    ],
+    "related_project_hint": "无货源电商",
+    "summary": "建议新增规则词组合：无货源开店、代运营套餐、垫付货款、验明资金、一年赚80万。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_025",
+    "type": "rule",
+    "title": "探店达人广告合规词",
+    "source_name": "常州市市场监督管理局",
+    "source_url": "https://scjgj.changzhou.gov.cn/html/gsj/2025/BCOAJQIO_0520/24300.html",
+    "found_at": "2026-05-23",
+    "event_date": "2025-05-20",
+    "keywords": [
+      "广告标识",
+      "种草",
+      "探店测评",
+      "虚假宣传",
+      "商业推广"
+    ],
+    "risk_categories": [
+      "platform_abuse",
+      "false_promise"
+    ],
+    "related_project_hint": "探店达人/本地生活接单",
+    "summary": "建议新增规则词组合：未标广告、种草合作、探店测评、到店体验官、商业推广。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_026",
+    "type": "project",
+    "title": "海外任务/应用优化兼职",
+    "source_name": "美国联邦贸易委员会 FTC",
+    "source_url": "https://www.ftc.gov/news-events/data-visualizations/data-spotlight/2024/12/paying-get-paid-gamified-job-scams-drive-record-losses",
+    "found_at": "2026-05-23",
+    "event_date": "2024-12",
+    "keywords": [
+      "app optimization",
+      "product boosting",
+      "rating task",
+      "task set",
+      "crypto deposit"
+    ],
+    "risk_categories": [
+      "brushing_rebate",
+      "payment_first",
+      "withdrawal_block",
+      "crypto"
+    ],
+    "related_project_hint": "海外任务/应用优化兼职",
+    "summary": "FTC 数据观察显示游戏化任务骗局在 2024 年快速增长，常用应用优化、商品助推和评分任务包装，随后要求用户入金或充值。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_027",
+    "type": "project",
+    "title": "代理维权/债务优化",
+    "source_name": "中央网信办",
+    "source_url": "https://www.cac.gov.cn/2026-02/06/c_1772110875635198.htm",
+    "found_at": "2026-05-23",
+    "event_date": "2026-02",
+    "keywords": [
+      "代理维权",
+      "债务优化",
+      "征信修复",
+      "全额退保",
+      "投顾退费"
+    ],
+    "risk_categories": [
+      "false_promise",
+      "payment_first",
+      "sensitive_info",
+      "platform_abuse"
+    ],
+    "related_project_hint": "金融代理维权/短视频引流",
+    "summary": "2026 年治理线索提示金融代理维权、债务优化等内容容易通过短视频和直播放大焦虑并导向私域收费。",
+    "suggest_import": true,
+    "review_status": "imported"
+  },
+  {
+    "candidate_id": "cand_20260523_028",
+    "type": "case",
+    "title": "网信部门部署整治 AI 应用乱象",
+    "source_name": "中央网信办",
+    "source_url": "https://www.cac.gov.cn/2026-04/30/c_1779289298718765.htm",
+    "found_at": "2026-05-23",
+    "event_date": "2026-04",
+    "keywords": [
+      "AI应用乱象",
+      "AI换脸",
+      "AI换声",
+      "未标识合成",
+      "批量账号"
+    ],
+    "risk_categories": [
+      "ai_abuse",
+      "platform_abuse",
+      "false_promise"
+    ],
+    "related_project_hint": "AI副业/数字人/无人直播",
+    "summary": "中央网信办 2026 年部署整治 AI 应用乱象，可作为 AI 副业工具、数字人和批量内容变现的最新治理依据。",
+    "suggest_import": true,
+    "review_status": "imported"
   }
 ]

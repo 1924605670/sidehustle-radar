@@ -31,26 +31,30 @@
   </view>
 
   <view class="panel">
-    <view class="section-title">快速查询</view>
-    <input class="input" placeholder="搜索：小说推文、刷单返利、无人直播" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="goSearch" />
-    <view class="button-row">
-      <view class="primary-button" bindtap="goSearch">查项目</view>
-      <view class="secondary-button" bindtap="goScan">测风险</view>
+    <view class="section-title">现在先做什么</view>
+    <view class="action-grid compact-actions">
+      <block wx:for="{{quickActions}}" wx:key="key">
+        <view class="action-card" data-action="{{item.key}}" bindtap="handleQuickAction">
+          <view class="action-title">{{item.title}}</view>
+          <view class="muted">{{item.desc}}</view>
+        </view>
+      </block>
     </view>
+    <view class="divider"></view>
+    <view class="section-title compact-title">快速搜索</view>
+    <input class="input" placeholder="搜索：小说推文、刷单返利、无人直播" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="goSearch" />
+    <view class="button-row tight-row">
+      <view class="primary-button" bindtap="goSearch">查项目</view>
+      <view class="secondary-button" bindtap="goScan">测文案</view>
+    </view>
+    <view class="field-tip">如果你看到的是广告、私聊或课程话术，优先用“测文案”。</view>
   </view>
 
-  <view class="section-title">开始判断</view>
-  <view class="action-grid">
-    <block wx:for="{{quickActions}}" wx:key="key">
-      <view class="action-card" data-action="{{item.key}}" bindtap="handleQuickAction">
-        <view class="action-title">{{item.title}}</view>
-        <view class="muted">{{item.desc}}</view>
-      </view>
-    </block>
-  </view>
-
-  <view class="panel">
-    <view class="section-title">使用顺序</view>
+  <view class="panel soft-panel">
+    <view class="section-title">
+      <text>判断顺序</text>
+      <text class="muted">先项目，后文案</text>
+    </view>
     <block wx:for="{{processSteps}}" wx:key="title">
       <view class="process-line">
         <view class="process-index">{{index + 1}}</view>
@@ -63,7 +67,10 @@
   </view>
 
   <view class="panel">
-    <view class="section-title">热门查询</view>
+    <view class="section-title">
+      <text>热门搜索</text>
+      <text class="section-link" bindtap="goCases">先看高危方向</text>
+    </view>
     <view>
       <block wx:for="{{hotKeywords}}" wx:key="*this">
         <view class="tag" data-keyword="{{item}}" bindtap="searchTag">{{item}}</view>
@@ -72,8 +79,8 @@
   </view>
 
   <view class="section-title">
-    <text>先避开这些方向</text>
-    <text class="muted" bindtap="goCases">高风险优先</text>
+    <text>优先避开这些方向</text>
+    <text class="section-link" bindtap="goCases">查看高风险列表</text>
   </view>
   <block wx:for="{{topProjects}}" wx:key="id">
     <view class="project-card project-card-strong" data-slug="{{item.slug}}" bindtap="openProject">
@@ -94,7 +101,7 @@
   <view class="section-block" wx:if="{{starterProjects.length}}">
     <view class="section-title">
       <text>更适合先小步验证</text>
-      <text class="muted" bindtap="goFit">做起步建议</text>
+      <text class="section-link" bindtap="goFit">做适配测试</text>
     </view>
     <block wx:for="{{starterProjects}}" wx:key="id">
       <view class="project-card starter-card" data-slug="{{item.slug}}" bindtap="openProject">
@@ -112,7 +119,10 @@
   </view>
 
   <view class="section-block" wx:if="{{latestCases.length}}">
-    <view class="section-title">最近两年公开案例</view>
+    <view class="section-title">
+      <text>最近两年公开案例</text>
+      <text class="muted">优先展示新近风险</text>
+    </view>
     <block wx:for="{{latestCases}}" wx:key="id">
       <view class="case-card compact-case">
         <view class="card-title">{{item.title}}</view>

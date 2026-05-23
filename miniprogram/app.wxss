@@ -60,6 +60,12 @@ page {
   font-weight: 700;
 }
 
+.section-link {
+  color: #0f766e;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
 .section-block {
   margin-bottom: 26rpx;
 }
@@ -121,6 +127,10 @@ page {
   display: flex;
   gap: 16rpx;
   margin-top: 20rpx;
+}
+
+.button-row.tight-row {
+  margin-top: 16rpx;
 }
 
 .button-row .button,
@@ -265,6 +275,23 @@ page {
   font-size: 22rpx;
 }
 
+.field-tip {
+  margin-top: 10rpx;
+  color: #667085;
+  font-size: 22rpx;
+  line-height: 1.45;
+}
+
+.inline-error {
+  margin-top: 14rpx;
+  padding: 16rpx 18rpx;
+  border-radius: 12rpx;
+  background: #fff1f0;
+  color: #b42318;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
 .project-card,
 .case-card {
   background: #ffffff;
@@ -298,6 +325,86 @@ page {
   color: #667085;
   font-size: 23rpx;
   line-height: 1.4;
+}
+
+.filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+
+.summary-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 14rpx;
+  border-radius: 999rpx;
+  background: #eef6ff;
+  color: #1849a9;
+  font-size: 22rpx;
+  line-height: 1.2;
+}
+
+.decision-banner {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50rpx;
+  padding: 0 16rpx;
+  border-radius: 12rpx;
+  background: #eff8ff;
+  color: #175cd3;
+  font-size: 23rpx;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.decision-banner.high {
+  background: #fff6e7;
+  color: #b54708;
+}
+
+.decision-banner.extreme {
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.decision-banner.low {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.action-stack {
+  margin-top: 18rpx;
+}
+
+.action-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 14rpx;
+  padding: 14rpx 0;
+  color: #344054;
+  font-size: 26rpx;
+  line-height: 1.5;
+  border-bottom: 1rpx solid #edf1f7;
+}
+
+.action-line:last-child {
+  border-bottom: 0;
+}
+
+.action-bullet {
+  flex: 0 0 14rpx;
+  width: 14rpx;
+  height: 14rpx;
+  margin-top: 12rpx;
+  border-radius: 50%;
+  background: #0f766e;
+}
+
+.soft-panel {
+  background: #f8fbff;
+  border-color: #d8e5f5;
+  box-shadow: none;
 }
 
 .divider {

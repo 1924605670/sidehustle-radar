@@ -71,8 +71,16 @@
   box-shadow: 0 8rpx 18rpx rgba(15, 23, 42, 0.08);
 }
 
+.mode-tip {
+  margin-top: -6rpx;
+}
+
 .field-block {
   margin-top: 22rpx;
+}
+
+.toggle-line {
+  cursor: pointer;
 }
 
 .section-title.compact {
@@ -136,6 +144,10 @@
 
 .signal-chip.active .signal-dot {
   background: #f79009;
+}
+
+.advanced-block + .advanced-block {
+  margin-top: 20rpx;
 }
 
 .example-card {

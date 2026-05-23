@@ -10,6 +10,7 @@ Page({
     loadedOnce: false,
     activeLevel: '',
     activeCategory: '',
+    filterSummary: [],
     levelFilters: [
       { value: '', text: '全部风险' },
       { value: 'extreme', text: '极高风险' },
@@ -74,7 +75,8 @@ Page({
         this.setData({
           items,
           total: res.total || items.length,
-          loadedOnce: true
+          loadedOnce: true,
+          filterSummary: this.buildFilterSummary()
         });
       })
       .catch(() => {
@@ -95,6 +97,33 @@ Page({
 
   clearKeyword() {
     this.setData({ keyword: '' }, () => this.search());
+  },
+
+  clearAllFilters() {
+    this.setData(
+      {
+        keyword: '',
+        activeCategory: '',
+        activeLevel: ''
+      },
+      () => this.search()
+    );
+  },
+
+  buildFilterSummary() {
+    const summary = [];
+    if (this.data.keyword.trim()) {
+      summary.push(`关键词：${this.data.keyword.trim()}`);
+    }
+    const level = this.data.levelFilters.find((item) => item.value === this.data.activeLevel);
+    const category = this.data.categoryFilters.find((item) => item.value === this.data.activeCategory);
+    if (category && category.value) {
+      summary.push(`方向：${category.text}`);
+    }
+    if (level && level.value) {
+      summary.push(`风险：${level.text}`);
+    }
+    return summary;
   },
 
   goScan() {

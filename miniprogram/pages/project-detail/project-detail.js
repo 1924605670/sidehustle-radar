@@ -1,6 +1,19 @@
 const { request } = require('../../utils/api');
 const { decorateCase, decorateProject, rememberProject } = require('../../utils/format');
 
+function decisionTone(level) {
+  if (level === 'extreme') {
+    return 'extreme';
+  }
+  if (level === 'high') {
+    return 'high';
+  }
+  if (level === 'low') {
+    return 'low';
+  }
+  return 'medium';
+}
+
 function entriesFromThreshold(threshold) {
   const labels = {
     time: '时间',
@@ -34,6 +47,8 @@ Page({
           ...project,
           cases: (project.cases || []).map(decorateCase)
         });
+        decorated.decision_tone = decisionTone(decorated.risk_level);
+        decorated.primary_steps = (decorated.verification_steps || []).slice(0, 3);
         rememberProject(decorated);
         wx.setNavigationBarTitle({ title: project.title || '项目详情' });
         this.setData({

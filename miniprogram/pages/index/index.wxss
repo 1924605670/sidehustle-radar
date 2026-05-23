@@ -74,6 +74,10 @@
   margin-bottom: 24rpx;
 }
 
+.compact-actions {
+  margin-bottom: 0;
+}
+
 .action-card {
   min-height: 140rpx;
   padding: 22rpx 20rpx;
@@ -89,6 +93,11 @@
   color: #101828;
   font-size: 28rpx;
   font-weight: 700;
+}
+
+.compact-title {
+  margin-bottom: 12rpx;
+  font-size: 27rpx;
 }
 
 .process-line {

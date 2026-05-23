@@ -538,5 +538,165 @@
     "force_level": "high",
     "explanation": "数字人或无人直播若主打挂机自动赚钱，容易触发平台规则和虚假宣传风险。",
     "enabled": true
+  },
+  {
+    "id": "rk_crypto_lead_trading",
+    "keyword": "带单",
+    "match_type": "keyword",
+    "category": "crypto",
+    "score": 18,
+    "force_level": "medium",
+    "explanation": "虚拟币、副业、投资语境中的带单常用于诱导开户和入金。",
+    "enabled": true
+  },
+  {
+    "id": "rk_digital_option",
+    "keyword": "数字期权",
+    "match_type": "keyword",
+    "category": "crypto",
+    "score": 35,
+    "force_level": "high",
+    "explanation": "境外数字期权已被官方列为需要警惕的非法金融活动话术。",
+    "enabled": true
+  },
+  {
+    "id": "rk_no_inventory_store",
+    "keyword": "无货源开店",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 22,
+    "force_level": "medium",
+    "explanation": "无货源开店本身不必然违法，但与代运营、垫付、验资组合时风险很高。",
+    "enabled": true
+  },
+  {
+    "id": "rk_capital_verification",
+    "keyword": "验明资金",
+    "match_type": "keyword",
+    "category": "withdrawal_block",
+    "score": 28,
+    "force_level": "high",
+    "explanation": "以验明资金为由继续要求转账，是常见的提现阻断套路。",
+    "enabled": true
+  },
+  {
+    "id": "combo_crypto_guaranteed_profit",
+    "keyword": "虚拟币|炒币+带单|保本|高收益|套利",
+    "match_type": "combo",
+    "category": "crypto",
+    "score": 75,
+    "force_level": "extreme",
+    "explanation": "虚拟币与带单、保本、高收益或套利组合时，应直接判为极高风险。",
+    "enabled": true
+  },
+  {
+    "id": "combo_no_inventory_advance_payment",
+    "keyword": "无货源|开店+代运营|垫付货款|验明资金|无法提现",
+    "match_type": "combo",
+    "category": "payment_first",
+    "score": 70,
+    "force_level": "extreme",
+    "explanation": "无货源开店若伴随代运营收费、垫付货款和提现障碍，应直接按高危套路处理。",
+    "enabled": true
+  },
+  {
+    "id": "combo_live_course_upsell",
+    "keyword": "直播授课|0元学+陪跑|升级课程|接单|收益截图",
+    "match_type": "combo",
+    "category": "false_promise",
+    "score": 45,
+    "force_level": "high",
+    "explanation": "免费课和直播分享若继续引导陪跑、升级套餐和接单承诺，存在明显卖课转化风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_app_optimization_task",
+    "keyword": "app optimization",
+    "match_type": "keyword",
+    "category": "brushing_rebate",
+    "score": 35,
+    "force_level": "high",
+    "explanation": "App optimization 常被用于包装境外游戏化任务骗局，本质可能仍是刷单返利变体。",
+    "enabled": true
+  },
+  {
+    "id": "rk_product_boosting_task",
+    "keyword": "product boosting",
+    "match_type": "keyword",
+    "category": "brushing_rebate",
+    "score": 35,
+    "force_level": "high",
+    "explanation": "Product boosting、商品助推、评分任务等话术常与充值解锁任务组绑定。",
+    "enabled": true
+  },
+  {
+    "id": "rk_task_set_unlock",
+    "keyword": "任务组",
+    "match_type": "keyword",
+    "category": "task_platform",
+    "score": 25,
+    "force_level": "medium",
+    "explanation": "任务组、连单、解锁下一组任务常用于诱导继续充值。",
+    "enabled": true
+  },
+  {
+    "id": "rk_ai_face_swap",
+    "keyword": "AI换脸",
+    "match_type": "keyword",
+    "category": "ai_abuse",
+    "score": 30,
+    "force_level": "high",
+    "explanation": "AI 换脸、换声或冒用他人形象用于变现，存在合规和侵权风险。",
+    "enabled": true
+  },
+  {
+    "id": "rk_credit_repair",
+    "keyword": "征信修复",
+    "match_type": "keyword",
+    "category": "false_promise",
+    "score": 35,
+    "force_level": "high",
+    "explanation": "征信修复、征信洗白等承诺高度可疑，需警惕先收费和敏感信息泄露。",
+    "enabled": true
+  },
+  {
+    "id": "rk_proxy_rights",
+    "keyword": "代理维权",
+    "match_type": "keyword",
+    "category": "payment_first",
+    "score": 25,
+    "force_level": "medium",
+    "explanation": "代理维权若承诺包成功或先收服务费，可能涉及虚假承诺和材料风险。",
+    "enabled": true
+  },
+  {
+    "id": "combo_gamified_task_deposit",
+    "keyword": "优化|助推|评分|rating|boosting+充值|入金|解锁|提现",
+    "match_type": "combo",
+    "category": "brushing_rebate",
+    "score": 75,
+    "force_level": "extreme",
+    "explanation": "评分优化、商品助推类任务一旦要求充值、入金或解锁提现，应按极高风险处理。",
+    "enabled": true
+  },
+  {
+    "id": "combo_financial_proxy_fee",
+    "keyword": "债务优化|征信修复|全额退保|投顾退费+服务费|包成功|代理|保证",
+    "match_type": "combo",
+    "category": "false_promise",
+    "score": 65,
+    "force_level": "high",
+    "explanation": "金融代理维权若承诺包成功并收服务费，存在资质、隐私和虚假承诺风险。",
+    "enabled": true
+  },
+  {
+    "id": "combo_tandian_ad_compliance",
+    "keyword": "探店|种草|达人+广告|置换|刷好评|虚假测评",
+    "match_type": "combo",
+    "category": "platform_abuse",
+    "score": 42,
+    "force_level": "medium",
+    "explanation": "探店和种草接单要标明商业合作，不能做虚假测评或刷好评。",
+    "enabled": true
   }
 ]

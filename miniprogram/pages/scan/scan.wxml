@@ -14,6 +14,7 @@
         <view class="segmented-item {{activeMode === item.key ? 'active' : ''}}" data-mode="{{item.key}}" bindtap="switchMode">{{item.text}}</view>
       </block>
     </view>
+    <view class="field-tip mode-tip">{{activeModeTip}}</view>
 
     <view class="field-block" wx:if="{{activeMode !== 'copy'}}">
       <view class="section-title compact">
@@ -21,6 +22,7 @@
         <text class="muted">可只填关键词</text>
       </view>
       <input class="input" placeholder="例如：AI副业课、短剧切片、无人直播" value="{{projectName}}" bindinput="onProjectInput" />
+      <view class="field-tip">不确定项目名时，也可以直接跳过，先贴文案。</view>
     </view>
 
     <view class="field-block" wx:if="{{activeMode !== 'project'}}">
@@ -29,31 +31,45 @@
         <text class="muted">{{text.length}}/2000</text>
       </view>
       <textarea class="textarea scan-textarea" placeholder="粘贴你看到的副业广告、招聘话术或私聊内容..." value="{{text}}" bindinput="onTextInput" maxlength="2000" />
+      <view class="field-tip">不要粘贴身份证、银行卡、验证码等敏感信息。</view>
     </view>
 
     <view class="field-block">
-      <view class="section-title compact">来源平台</view>
-      <view class="chip-grid">
-        <block wx:for="{{platforms}}" wx:key="key">
-          <view class="choice-chip {{selectedPlatform === item.key ? 'active' : ''}}" data-platform="{{item.key}}" bindtap="selectPlatform">{{item.text}}</view>
-        </block>
+      <view class="section-title compact toggle-line" bindtap="toggleAdvanced">
+        <text>补充线索（可选）</text>
+        <text class="section-link">{{showAdvanced ? '收起' : '展开'}}</text>
       </view>
-    </view>
-
-    <view class="field-block">
-      <view class="section-title compact">
-        <text>已出现的红线</text>
-        <text class="muted">可多选</text>
-      </view>
-      <view class="signal-grid">
-        <block wx:for="{{signalOptions}}" wx:key="key">
-          <view class="signal-chip {{item.active ? 'active' : ''}}" data-key="{{item.key}}" bindtap="toggleSignal">
-            <view class="signal-dot"></view>
-            <text>{{item.text}}</text>
+      <view wx:if="{{showAdvanced}}">
+        <view class="advanced-block">
+          <view class="section-title compact">
+            <text>来源平台</text>
+            <text class="muted">帮助判断场景</text>
           </view>
-        </block>
+          <view class="chip-grid">
+            <block wx:for="{{platforms}}" wx:key="key">
+              <view class="choice-chip {{selectedPlatform === item.key ? 'active' : ''}}" data-platform="{{item.key}}" bindtap="selectPlatform">{{item.text}}</view>
+            </block>
+          </view>
+        </view>
+
+        <view class="advanced-block">
+          <view class="section-title compact">
+            <text>已出现的红线</text>
+            <text class="muted">可多选</text>
+          </view>
+          <view class="signal-grid">
+            <block wx:for="{{signalOptions}}" wx:key="key">
+              <view class="signal-chip {{item.active ? 'active' : ''}}" data-key="{{item.key}}" bindtap="toggleSignal">
+                <view class="signal-dot"></view>
+                <text>{{item.text}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
       </view>
     </view>
+
+    <view class="inline-error" wx:if="{{formError}}">{{formError}}</view>
 
     <view class="button-row">
       <view class="ghost-button" bindtap="clearText">重置</view>

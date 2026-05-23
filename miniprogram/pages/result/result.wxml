@@ -9,16 +9,46 @@
   <block wx:else>
     <view class="hero-panel">
       <view class="eyebrow">检测结果</view>
-      <view class="result-score">{{result.risk_score}}</view>
-      <view class="result-meta">
+      <view class="result-top">
+        <view>
+          <view class="result-score">{{result.risk_score}}</view>
+          <view class="muted">风险分</view>
+        </view>
         <view class="risk-pill {{result.risk_class}}">{{result.risk_level_text}}</view>
-        <view class="muted">{{result.possible_pattern}}</view>
+      </view>
+      <view class="decision-card {{result.decision_tone}}">
+        <view class="decision-title">{{result.decision_title}}</view>
+        <view class="decision-copy">{{result.possible_pattern}}</view>
       </view>
       <view class="result-context">
         <text>{{result.input_mode_text}}</text>
         <text>{{result.source_platform_text}}</text>
         <text wx:if="{{result.project_name}}">{{result.project_name}}</text>
       </view>
+    </view>
+
+    <view class="panel priority-panel">
+      <view class="section-title">先做这三件事</view>
+      <block wx:for="{{result.primary_actions}}" wx:key="*this">
+        <view class="action-line">
+          <view class="action-bullet"></view>
+          <view>{{item}}</view>
+        </view>
+      </block>
+      <view class="button-row tight-row">
+        <view class="secondary-button" bindtap="goScan">再测一段</view>
+        <view class="ghost-button" bindtap="goProjects">查项目库</view>
+      </view>
+    </view>
+
+    <view class="panel soft-panel" wx:if="{{result.primary_questions.length}}">
+      <view class="section-title">继续前先问清楚</view>
+      <block wx:for="{{result.primary_questions}}" wx:key="*this">
+        <view class="list-line">
+          <view class="list-index">{{index + 1}}</view>
+          <view>{{item}}</view>
+        </view>
+      </block>
     </view>
 
     <view class="panel" wx:if="{{result.selected_signal_phrases.length}}">

@@ -40,6 +40,10 @@
   margin-top: 14rpx;
 }
 
+.decision-banner {
+  margin-top: 16rpx;
+}
+
 .card-topline {
   display: flex;
   align-items: center;

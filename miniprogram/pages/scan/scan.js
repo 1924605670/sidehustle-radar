@@ -1,11 +1,20 @@
 const { request } = require('../../utils/api');
 const { decorateCase } = require('../../utils/format');
 
+const MODE_TIPS = {
+  copy: '适合把广告、招聘话术、私聊内容直接贴进来。',
+  project: '只记得项目名时，先看这个方向常见风险和关键词。',
+  checklist: '当文案不完整时，用红线自查快速补充线索。'
+};
+
 Page({
   data: {
     text: '',
     projectName: '',
     activeMode: 'copy',
+    activeModeTip: MODE_TIPS.copy,
+    showAdvanced: false,
+    formError: '',
     selectedPlatform: 'unknown',
     selectedSignals: [],
     loadingCases: false,
@@ -41,19 +50,33 @@ Page({
   },
 
   onTextInput(event) {
-    this.setData({ text: event.detail.value });
+    this.setData({
+      text: event.detail.value,
+      formError: ''
+    });
   },
 
   onProjectInput(event) {
-    this.setData({ projectName: event.detail.value });
+    this.setData({
+      projectName: event.detail.value,
+      formError: ''
+    });
   },
 
   switchMode(event) {
-    this.setData({ activeMode: event.currentTarget.dataset.mode });
+    const activeMode = event.currentTarget.dataset.mode;
+    this.setData({
+      activeMode,
+      activeModeTip: MODE_TIPS[activeMode] || MODE_TIPS.copy,
+      formError: ''
+    });
   },
 
   selectPlatform(event) {
-    this.setData({ selectedPlatform: event.currentTarget.dataset.platform });
+    this.setData({
+      selectedPlatform: event.currentTarget.dataset.platform,
+      formError: ''
+    });
   },
 
   toggleSignal(event) {
@@ -67,8 +90,13 @@ Page({
     const selectedSignals = Array.from(selected);
     this.setData({
       selectedSignals,
-      signalOptions: decorateSignals(selectedSignals)
+      signalOptions: decorateSignals(selectedSignals),
+      formError: ''
     });
+  },
+
+  toggleAdvanced() {
+    this.setData({ showAdvanced: !this.data.showAdvanced });
   },
 
   scan() {
@@ -101,14 +129,17 @@ Page({
       .filter((item) => this.data.selectedSignals.includes(item.key));
 
     if (this.data.activeMode === 'copy' && text.length < 10) {
+      this.setData({ formError: '请先粘贴更完整的文案，至少 10 个字。' });
       wx.showToast({ title: '请粘贴更完整的文案', icon: 'none' });
       return null;
     }
     if (this.data.activeMode === 'project' && projectName.length < 2) {
+      this.setData({ formError: '请先输入项目名称，至少 2 个字。' });
       wx.showToast({ title: '请输入项目名称', icon: 'none' });
       return null;
     }
     if (this.data.activeMode === 'checklist' && selectedSignals.length === 0 && text.length < 6) {
+      this.setData({ formError: '请至少勾选一个红线，或补充几句描述。' });
       wx.showToast({ title: '请至少勾选一个红线', icon: 'none' });
       return null;
     }
@@ -124,6 +155,7 @@ Page({
       parts.push(`已勾选风险信号：${selectedSignals.map((item) => item.phrase).join('；')}`);
     }
 
+    this.setData({ formError: '' });
     return {
       text: parts.join('\n'),
       raw_text: text,
@@ -147,6 +179,7 @@ Page({
     this.setData({
       text: '',
       projectName: '',
+      formError: '',
       selectedSignals: [],
       signalOptions: decorateSignals([])
     });
