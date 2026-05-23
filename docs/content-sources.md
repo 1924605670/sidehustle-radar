@@ -2,6 +2,8 @@
 
 本文件用于记录项目库和风险词库的资料来源。运营人员新增项目卡时，应尽量引用官方、平台规则或可信公开资料，并在项目卡的 `source_refs` 中填写对应 ID。
 
+持续收录的执行计划见 `docs/content-collection-plan.md`。
+
 ## S001 公安部：十大高发电信网络诈骗类型
 
 - 链接：https://www.tlf.gov.cn/tlfs/c106653/202406/e204c4f7d902454ea20e9754b4a6dee3.shtml
